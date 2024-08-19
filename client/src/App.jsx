@@ -1,14 +1,24 @@
 import React from "react";
-import BarChart from "./components/BarChart";
-import LineChart from "./components/LineChart";
-import PieChart from "./components/PieChart";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
     <>
-      <LineChart />
+      <div className="w-full min-h-screen bg-deep_blue text-white font-roboto">
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </Router>
+      </div>
+      {/* <LineChart />
       <BarChart />
-      <PieChart />
+      <PieChart /> */}
     </>
   );
 }

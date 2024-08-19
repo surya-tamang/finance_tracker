@@ -10,7 +10,10 @@ export default {
         yellow: "#F8AE56",
         green: "#56F85C",
         grey: "#545454",
-        light_blue: "#545454",
+        light_blue: "#03141B",
+      },
+      fontFamily: {
+        roboto: ["Roboto", "sans-serif"],
       },
     },
   },
