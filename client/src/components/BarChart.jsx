@@ -31,13 +31,26 @@ const BarChart = () => {
         text: "expenses",
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          color: "#545454", // X-axis label color
+        },
+        grid: {
+          color: "#545454", // X-axis line color
+        },
+      },
+      y: {
+        grid: {
+          color: "#545454",
+        },
+      },
+    },
   };
   return (
-    <div className="w-full h-screen bg-deep_blue text-white flex items-center justify-center">
-      <section className="w-8/12">
-        <Bar options={option} data={barChartData} />
-      </section>
-    </div>
+    <section className="w-full bg-deep_blue">
+      <Bar options={option} data={barChartData} />
+    </section>
   );
 };
 

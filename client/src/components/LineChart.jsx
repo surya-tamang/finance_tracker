@@ -36,11 +36,9 @@ const LineChart = () => {
     },
   };
   return (
-    <div className="w-full h-screen bg-deep_blue text-white flex items-center justify-center">
-      <section className="w-8/12">
-        <Line options={option} data={LineCharData} />
-      </section>
-    </div>
+    <section className="w-full bg-deep_blue">
+      <Line options={option} data={LineCharData} />
+    </section>
   );
 };
 

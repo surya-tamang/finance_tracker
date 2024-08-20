@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 const Signup = () => {
   const [error, setError] = useState("");
 
-  // handle new user registration data
+  // ************************/ handle user data \*******************************\\
+
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -13,14 +14,15 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  // ************************/ fucntion to store inputs in userData \*******************************\\
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  // handle form submition
+  // ************************/ handle form submition \*******************************\\
 
-  // console.log(userData.password + " " + userData.confirmPassword);
   const handleSubmit = (e) => {
     const { firstName, lastName, email, password, confirmPassword } = userData;
     const regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
@@ -36,16 +38,19 @@ const Signup = () => {
       setError("");
     }
   };
-  // to show/hide password
+
+  // ************************/ to show/hide password \*******************************\\
+
   const [showPassword, setShowPassword] = useState(false);
 
-  // function to hanlde password visibilty
+  // ************************/ function to handle password visibility \*******************************\\
+
   const handlePwdVisibilty = () => {
     setShowPassword(!showPassword);
   };
 
   return (
-    <section className="w-full h-screen flex items-center justify-center flex-col gap-5 absolute top-0">
+    <section className="w-full h-screen flex items-center justify-center flex-col gap-5 top-0">
       <form
         action="/"
         method="POST"
@@ -56,6 +61,9 @@ const Signup = () => {
         <h1 className="font-medium text-lg uppercase">Register now</h1>
         <span className="text-red text-xs">{error}</span>
         <div className="flex w-full gap-2">
+          <label htmlFor="firstName" className="sr-only">
+            First name
+          </label>
           <input
             type="text"
             name="firstName"
@@ -64,6 +72,10 @@ const Signup = () => {
             value={userData.firstName}
             className="w-full bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
           />
+          <label htmlFor="lastName" className="sr-only">
+            last name
+          </label>
+
           <input
             type="text"
             name="lastName"
@@ -73,6 +85,10 @@ const Signup = () => {
             className="w-full bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
           />
         </div>
+        <label htmlFor="email" className="sr-only">
+          email
+        </label>
+
         <input
           type="email"
           name="email"
@@ -82,6 +98,9 @@ const Signup = () => {
           className="bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
         />
         <div className="relative w-full h-auto">
+          <label htmlFor="password" className="sr-only">
+            password
+          </label>
           <input
             type={`${showPassword ? "text" : "password"}`}
             name="password"
@@ -98,6 +117,9 @@ const Signup = () => {
           ></i>
         </div>
         <div className="relative w-full h-auto">
+          <label htmlFor="confirmPassword" className="sr-only">
+            confirm password
+          </label>
           <input
             type={`${showPassword ? "text" : "password"}`}
             name="confirmPassword"

@@ -17,11 +17,9 @@ const PieChart = () => {
     },
   };
   return (
-    <div className="w-full h-screen bg-deep_blue text-white flex items-center justify-center py-10">
-      <section className="w-10/12 h-full">
-        <Pie options={option} data={pieChartData} />
-      </section>
-    </div>
+    <section className="w-full h-full">
+      <Pie options={option} data={pieChartData} />
+    </section>
   );
 };
 

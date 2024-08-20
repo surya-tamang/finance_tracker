@@ -30,7 +30,7 @@ export const barChartData = {
       label: "expenses",
       data: [1220, 300, 500, 800, 2000],
       backgroundColor: ["#FDF8FA"],
-      borderColor: ["#545454"],
+      borderColor: ["#FDF8FA"],
       borderwidth: 1,
     },
   ],
