@@ -2,16 +2,35 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Login = () => {
+  // for displayin error
   const [error, setError] = useState("");
-  const [user, setUser] = useState({});
+
+  // to show/hide password
+  const [showPassword, setShowPassword] = useState(false);
+
+  // function to hanlde password visibilty
+  const handlePwdVisibilty = () => {
+    setShowPassword(!showPassword);
+  };
+
+  //for storing user
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  // function to handle the changes in the input
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
+
+  // function to handle the form on submit
   const handleSubmit = (e) => {
-    e.prevent.Default();
+    e.preventDefault();
   };
   return (
     <section className="w-full h-screen flex items-center justify-center flex-col gap-5 absolute top-0">
-      {/* <h1 className="text-3xl text-red font-medium tracking-widest uppercase">
-        Finance Tracker
-      </h1> */}
       <form
         action=""
         method="POST"
@@ -25,14 +44,26 @@ const Login = () => {
           type="email"
           name="email"
           placeholder="email"
+          value={user.email}
+          onChange={handleChange}
           className="bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
         />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          className="bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
-        />
+        <div className="relative w-full h-auto">
+          <input
+            type={`${showPassword ? "text" : "password"}`}
+            name="password"
+            placeholder="password"
+            value={user.password}
+            onChange={handleChange}
+            className="w-full h-auto bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
+          />
+          <i
+            onClick={handlePwdVisibilty}
+            className={`fa-regular ${
+              showPassword ? "fa-eye" : "fa-eye-slash"
+            } absolute right-2 top-2 cursor-pointer text-grey`}
+          ></i>
+        </div>
         <button
           type="submit"
           className="border-2 mt-5 border-yellow py-1 rounded-md text-yellow font-medium hover:bg-yellow hover:text-deep_blue"
