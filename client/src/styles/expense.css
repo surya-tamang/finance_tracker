@@ -1,0 +1,113 @@
+.expense_section {
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FDF8FA;
+    padding-top: 6rem;
+}
+
+.expense_section .container {
+    display: flex;
+    align-items: center;
+    padding: 30px 20px;
+    border-radius: 24px;
+    justify-content: space-between;
+    height: auto;
+    flex-direction: column;
+    gap: 4rem;
+    text-transform: capitalize;
+}
+
+/************** form styling ****************/
+
+.expense_section .container form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: end;
+    gap: 20px;
+    width: 50%;
+    height: 300px;
+    background-color: #03141B;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+form select,
+form input {
+    background-color: transparent;
+    outline: none;
+    border-bottom: 2px solid #545454;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+form select option {
+    background-color: #545454;
+    color: #03141B;
+    outline: none;
+    border: none;
+}
+
+/* For Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+form button {
+    background-color: transparent;
+    border: 2px solid #F8AE56;
+    padding: 8px 30px;
+    border-radius: 12px;
+    transition: all ease 0.3s;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #F8AE56;
+    color: #03141B;
+}
+
+/************** table styling ****************/
+
+.table_container {
+    width: 80%;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+table {
+    width: 100%;
+    overflow-y: scroll;
+    border-collapse: collapse;
+    margin-top: 20px;
+    height: auto;
+    max-height: 300px;
+}
+
+table th,
+table td {
+    text-align: left;
+    padding: 10px;
+    border-right: 2px solid #545454;
+}
+
+table tr {
+    border: 2px solid #545454;
+}
+
+/************** responsiveness ***************/
+@media screen and (max-width:768px) {
+    .expense_section .container form {
+        width: 80%;
+    }
+}

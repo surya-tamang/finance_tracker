@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  // const navigate = useNavigate();
   const [error, setError] = useState("");
 
   // ************************/ handle user data \*******************************\\
@@ -24,9 +25,9 @@ const Signup = () => {
   // ************************/ handle form submition \*******************************\\
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     const { firstName, lastName, email, password, confirmPassword } = userData;
     const regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
-    e.preventDefault();
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       setError("All fields required !");
