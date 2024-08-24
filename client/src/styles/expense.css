@@ -105,6 +105,11 @@ table tr {
     border: 2px solid #545454;
 }
 
+table tfoot tr td {
+    background-color: #F34B49;
+    /* color: #03141B; */
+}
+
 /************** responsiveness ***************/
 @media screen and (max-width:768px) {
     .expense_section .container form {

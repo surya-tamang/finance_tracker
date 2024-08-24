@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import "../styles/header.css";
 
 const Header = () => {
   const navList = [
@@ -9,15 +10,15 @@ const Header = () => {
   ];
 
   return (
-    <header className="absolute w-full flex items-center justify-between px-10 py-5 z-20">
-      <h1 className="text-red text-4xl font-medium">F.T</h1>
-      <nav className="flex gap-4 items-center">
-        <ul className="flex gap-4">
+    <header className="header">
+      <h1 className="logo">F.T</h1>
+      <nav>
+        <ul>
           {navList.map((item, index) => (
             <li key={index}>
               <NavLink
                 to={item.path}
-                className="px-2 capitalize hover:text-yellow"
+                className="navlist"
                 style={({ isActive }) => ({
                   color: isActive ? "#F8AE56" : "#FDF8FA",
                 })}
@@ -27,11 +28,15 @@ const Header = () => {
             </li>
           ))}
         </ul>
-        <div className="flex items-center gap-1 w-16 h-10">
-          <div className="w-10 h-full rounded-full bg-grey"></div>
+        <div className="profile">
+          <div className="avatar"></div>
           <i className="fa-solid fa-angle-down"></i>
         </div>
       </nav>
+      <div className="menuBar">
+        <i className="fa-solid fa-bars" id="open"></i>
+        <i className="fa-solid fa-x" id="close"></i>
+      </div>
     </header>
   );
 };

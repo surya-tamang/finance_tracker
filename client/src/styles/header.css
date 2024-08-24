@@ -1,0 +1,84 @@
+.header {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2.5rem;
+    z-index: 20;
+}
+
+.header .logo {
+    color: #F34B49;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.header nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header nav ul {
+    display: flex;
+    gap: 1rem;
+}
+
+.header nav ul li .navlist {
+    padding: 0 0.5rem;
+    text-transform: capitalize;
+
+}
+
+.header nav .profile {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    width: 4rem;
+    height: 2.30rem;
+}
+
+.profile .avatar {
+    width: 2.5rem;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #545454;
+}
+
+.menuBar {
+    display: none;
+}
+
+/*************** responsiveness ******************/
+
+@media screen and (max-width:480px) {
+    .header nav {
+        /* display: none; */
+        position: absolute;
+        height: 100dvh;
+        background-color: #545454;
+        width: 100%;
+        left: 0;
+        top: 0;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .header nav ul {
+        flex-direction: column;
+    }
+
+
+    .menuBar {
+        display: block;
+    }
+
+    .menuBar i {
+        font-size: 25px;
+    }
+
+    #close {
+        display: none;
+    }
+}

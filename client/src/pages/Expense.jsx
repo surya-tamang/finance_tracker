@@ -1,16 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/expense.css";
 
 const Expense = () => {
+  const [expense, setExpense] = useState({
+    remark: "",
+    amount: "",
+    category: "",
+  });
+
+  const [list, setList] = useState([]);
+
+  const handleChange = (e) => { 
+    const { name, value } = e.target;
+    setExpense({ ...expense, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setList([...list, expense]);
+    setExpense({ remark: "", amount: "", category: "" });
+    console.log(expense);
+  };
+
   return (
     <section className="expense_section">
       <div className="container">
         <h1>Add today's expenses</h1>
-        <form action="">
-          <input type="text" placeholder="remarks" />
-          <input type="number" placeholder="amount" />
-          <select name="category" id="category">
-            <option value="category" selected disabled>
+        <form action="" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="remark"
+            value={expense.remark}
+            onChange={handleChange}
+            placeholder="remarks"
+          />
+          <input
+            type="number"
+            name="amount"
+            value={expense.amount}
+            onChange={handleChange}
+            placeholder="amount"
+          />
+          <select
+            name="category"
+            onChange={handleChange}
+            value={expense.category}
+            id="category"
+          >
+            <option value="" disabled>
               Category
             </option>
             <option value="food">Food</option>
@@ -21,7 +58,7 @@ const Expense = () => {
             <option value="transportation">Transportation</option>
             <option value="extra">Extra</option>
           </select>
-          <button>Add</button>
+          <button type="submit">Add</button>
         </form>
         <div className="table_container">
           <table border="1">
@@ -35,17 +72,28 @@ const Expense = () => {
             </thead>
 
             <tbody>
-              <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-              </tr>
+              {list.map((item, index) => {
+                const { remark, amount, category } = item;
+                return (
+                  <tr key={index}>
+                    <td>{remark}</td>
+                    <td>{category}</td>
+                    <td>{`Rs ${amount}`}</td>
+                  </tr>
+                );
+              })}
             </tbody>
 
             <tfoot>
               <tr>
                 <td colSpan="2">total</td>
-                <td>-</td>
+                <td>
+                  {`Rs
+                  ${list.reduce(
+                    (total, item) => (total += Number(item.amount)),
+                    0
+                  )}`}
+                </td>
               </tr>
             </tfoot>
           </table>
