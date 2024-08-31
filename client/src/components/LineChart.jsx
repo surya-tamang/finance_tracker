@@ -9,7 +9,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  plugins,
 } from "chart.js";
 
 Chartjs.register(
@@ -31,7 +30,7 @@ const LineChart = () => {
       },
       title: {
         display: true,
-        text: "Steps",
+        text: "Expenses",
       },
     },
   };

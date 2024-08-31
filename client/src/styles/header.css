@@ -37,6 +37,22 @@
     gap: 0.25rem;
     width: 4rem;
     height: 2.30rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.profile .box {
+    position: absolute;
+    width: 8rem;
+    background-color: #545454;
+    top: 3rem;
+    right: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: end;
+    padding: 10px;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .profile .avatar {
@@ -44,6 +60,17 @@
     height: 100%;
     border-radius: 50%;
     background-color: #545454;
+}
+
+.profile .box button {
+    background-color: none;
+    border: none;
+}
+
+.profile .box button:hover {
+    background-color: transparent;
+    text-decoration: underline;
+    color: #FDF8FA;
 }
 
 .menuBar {
@@ -54,7 +81,6 @@
 
 @media screen and (max-width:480px) {
     .header nav {
-        /* display: none; */
         position: absolute;
         height: 100dvh;
         background-color: #545454;
@@ -63,6 +89,8 @@
         top: 0;
         flex-direction: column;
         justify-content: center;
+        display: none;
+
     }
 
     .header nav ul {
@@ -70,8 +98,13 @@
     }
 
 
+    .profile .avatar {
+        background-color: red;
+    }
+
     .menuBar {
         display: block;
+        z-index: 20;
     }
 
     .menuBar i {

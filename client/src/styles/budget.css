@@ -1,0 +1,21 @@
+.budget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100dvh;
+}
+
+
+.budget form.budgetform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 30px 20px;
+    flex-wrap: wrap;
+}
+
+form.budgetform input {
+    width: 80%;
+}

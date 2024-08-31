@@ -1,18 +1,25 @@
 export const LineCharData = {
   labels: [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Nov",
+    "Dec",
   ],
   datasets: [
     {
-      label: "Steps",
-      data: [5000, 6000, 3000, 4000, 4500, 9000, 1500],
-      borderColor: "#FDF8FA",
+      label: "Expenses",
+      data: [
+        5000, 6000, 3000, 4000, 4500, 9000, 1500, 500, 8000, 1500, 6000, 7000,
+      ],
+      borderColor: "#545454",
+      backgroundColor: ["#FDF8FA"],
     },
   ],
 };

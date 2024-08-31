@@ -1,5 +1,5 @@
 import React from "react";
-import BarChart from "../components/BarChart";
+import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
 
 const Overview = () => {
@@ -38,7 +38,7 @@ const Overview = () => {
             })}
           </div>
           <div className="w-full flex items-center justify-center bg-white">
-            <BarChart />
+            <LineChart />
           </div>
         </div>
         <div className="md:w-4/12 w-full h-full bg-light_blue p-4 rounded-lg">
