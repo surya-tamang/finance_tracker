@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <header className="header">
       <h1 className="logo">F.T</h1>
-      <nav style={{ display: isNavOpen ? "flex" : "none" }}>
+      <nav className={`${isNavOpen ? "yesnav" : "nonav"}`}>
         <ul>
           {navList.map((item, index) => (
             <li key={index}>
@@ -33,7 +33,7 @@ const Header = () => {
                 style={({ isActive }) => ({
                   color: isActive ? "#F8AE56" : "#FDF8FA",
                 })}
-                onClick={() => setIsNavOpen(false)}
+                onClick={() => setIsNavOpen(!isNavOpen)}
               >
                 {item.name}
               </NavLink>

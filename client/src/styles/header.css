@@ -93,6 +93,16 @@
 
     }
 
+
+
+    nav.nonav {
+        display: none;
+    }
+
+    nav.yesnav {
+        display: flex;
+    }
+
     .header nav ul {
         flex-direction: column;
     }
