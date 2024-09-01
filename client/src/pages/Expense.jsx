@@ -1,25 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/expense.css";
+import { useDispatch, useSelector } from "react-redux";
+import { addExp } from "../redux/slices/expenseSlice";
 
 const Expense = () => {
+  const dispatch = useDispatch();
+  const [error, setError] = useState("");
+  const expenses = useSelector((state) => state.expense);
   const [expense, setExpense] = useState({
     remark: "",
     amount: "",
     category: "",
   });
 
-  const [list, setList] = useState([]);
-
-  const handleChange = (e) => { 
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setExpense({ ...expense, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setList([...list, expense]);
-    setExpense({ remark: "", amount: "", category: "" });
-    console.log(expense);
+    const { remark, amount, category } = expense;
+
+    if (!remark || !amount || !category) {
+      setError("All fields required !");
+    } else {
+      dispatch(addExp(expense));
+      setExpense({ remark: "", amount: "", category: "" });
+      setError("");
+    }
   };
 
   return (
@@ -58,6 +67,7 @@ const Expense = () => {
             <option value="transportation">Transportation</option>
             <option value="extra">Extra</option>
           </select>
+          <span id="error">{error}</span>
           <button type="submit">Add</button>
         </form>
         <div className="table_container">
@@ -65,6 +75,7 @@ const Expense = () => {
             <caption>Statements</caption>
             <thead>
               <tr>
+                <th>SN</th>
                 <th>remarks</th>
                 <th>category</th>
                 <th>amount</th>
@@ -72,10 +83,11 @@ const Expense = () => {
             </thead>
 
             <tbody>
-              {list.map((item, index) => {
+              {expenses.map((item, index) => {
                 const { remark, amount, category } = item;
                 return (
                   <tr key={index}>
+                    <td>{index + 1}</td>
                     <td>{remark}</td>
                     <td>{category}</td>
                     <td>{`Rs ${amount}`}</td>
@@ -86,10 +98,10 @@ const Expense = () => {
 
             <tfoot>
               <tr>
-                <td colSpan="2">total</td>
+                <td colSpan="3">total</td>
                 <td>
                   {`Rs
-                  ${list.reduce(
+                  ${expenses.reduce(
                     (total, item) => (total += Number(item.amount)),
                     0
                   )}`}
