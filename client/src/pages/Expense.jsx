@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/expense.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addExp } from "../redux/slices/expenseSlice";
