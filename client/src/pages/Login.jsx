@@ -1,37 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../redux/slices/users";
 
 const Login = () => {
   const navigate = useNavigate();
-  // ************************/ show error \*******************************\\
+
+  const dispatch = useDispatch();
+  const {
+    data: users,
+    isLoading,
+    isError,
+  } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  // ************************/ form validation \*******************************\\
 
   const [error, setError] = useState("");
 
-  // ************************/ hide/show password \*******************************\\
-
   const [showPassword, setShowPassword] = useState(false);
-
-  // ************************/ function to handle password visibility \*******************************\\
 
   const handlePwdVisibilty = () => {
     setShowPassword(!showPassword);
   };
-
-  // ************************/ user inputs \*******************************\\
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  // ************************/ function to handle changes in input \*******************************\\
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-
-  // ************************/ function handle form subit \*******************************\\
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,9 +43,13 @@ const Login = () => {
     if (!user.email || !user.password) {
       setError("Please fill out all fields.");
       return;
+    } else if (user.email !== users.email && user.password !== users.password) {
+      setError("User not found");
+    } else {
+      navigate("/setBudget");
     }
-    navigate("/setBudget");
   };
+
   return (
     <section className="w-full h-screen flex items-center justify-center flex-col gap-5 top-0">
       <form
