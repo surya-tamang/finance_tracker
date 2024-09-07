@@ -1,7 +1,9 @@
 const http = require("http");
 const { getUsers, addUser, updateUser, deleteUser } = require("./controller");
+const cors = require("./cors");
 
 const server = http.createServer(async (req, res) => {
+  cors(req, res);
   if (req.method === "GET" && req.url === "/users") {
     getUsers(res);
   } else if (req.method === "POST" && req.url === "/users") {
@@ -11,7 +13,7 @@ const server = http.createServer(async (req, res) => {
   } else if (req.method === "DELETE" && req.url.startsWith("/users")) {
     deleteUser(req, res);
   } else {
-    res.statusCode = 401;
+    res.statusCode = 404;
     res.setHeader("Content-type", "text/plain");
     res.end("Not found");
   }
