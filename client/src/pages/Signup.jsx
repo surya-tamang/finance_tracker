@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
+import addUser from "../redux/slices/addUser";
 
 const Signup = () => {
-  // const navigate = useNavigate();
   const [error, setError] = useState("");
 
   // ************************/ handle user data \*******************************\\
@@ -12,7 +13,6 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   // ************************/ fucntion to store inputs in userData \*******************************\\
@@ -20,29 +20,31 @@ const Signup = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+    setError("");
   };
 
   // ************************/ handle form submition \*******************************\\
+  const dispatch = useDispatch();
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password, confirmPassword } = userData;
-    const regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+    const { firstName, lastName, email, password } = userData;
+    const regexp = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       setError("All fields required !");
-    } else if (!email.match(regexp)) {
+    } else if (!regexp.test(email)) {
       setError("Invalid email !!");
-    } else if (userData.password !== userData.confirmPassword) {
-      setError("Password doesn't match with each other!!");
+    } else if (userData.password !== confirmPassword) {
+      setError("Password doesn't match !!");
     } else {
       setError("");
+      dispatch(addUser(userData));
     }
   };
-
-  // ************************/ to show/hide password \*******************************\\
-
-  const [showPassword, setShowPassword] = useState(false);
 
   // ************************/ function to handle password visibility \*******************************\\
 
@@ -125,8 +127,8 @@ const Signup = () => {
             type={`${showPassword ? "text" : "password"}`}
             name="confirmPassword"
             placeholder="confirm password"
-            value={userData.confirmPassword}
-            onChange={handleChange}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="w-full h-auto bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
           />
           <i

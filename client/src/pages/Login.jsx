@@ -43,10 +43,17 @@ const Login = () => {
     if (!user.email || !user.password) {
       setError("Please fill out all fields.");
       return;
-    } else if (user.email !== users.email && user.password !== users.password) {
-      setError("User not found");
+    }
+
+    const matchedUser = users.find(
+      (u) => u.email === user.email && u.password === user.password
+    );
+
+    if (!matchedUser) {
+      setError("User doesn't exist");
     } else {
-      navigate("/setBudget");
+      setError("");
+      navigate("/overview");
     }
   };
 
