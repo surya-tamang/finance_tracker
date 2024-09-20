@@ -1,4 +1,5 @@
 const user = require("../model/user");
+// const bcrypt = require("bcryptjs");
 
 const getUser = async (req, res) => {
   try {
@@ -11,33 +12,70 @@ const getUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const body = req.body;
-
-  if (!body.first_name || !body.last_name || !body.email || !body.password) {
-    return res.status(400).json({ msg: "All fields are required" });
-  }
-
   try {
-    const result = await user.create({
-      first_name: body.first_name,
-      last_name: body.last_name,
-      email: body.email,
-      password: body.password,
+    // Log the received data
+    console.log("Received registration data:", req.body);
+
+    const { firstName, lastName, email, password } = req.body;
+
+    // Validate required fields
+    if (!firstName || !lastName || !email || !password) {
+      console.log("Validation failed: Missing fields");
+      return res.status(400).json({ msg: "All fields are required" });
+    }
+
+    // Check if the user already exists
+    const existingUser = await user.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ msg: "User already exists" });
+    }
+
+    // Hash the password
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create a new user
+    const newUser = new user({
+      firstName,
+      lastName,
+      email,
+      password,
     });
 
-    console.log(result);
+    // Log the user object before saving
+    console.log("New User Object:", newUser);
 
-    return res.status(201).json({
-      msg: "User registered successfully",
-      newId: result._id,
-    });
+    await newUser.save();
+
+    return res.status(201).json({ msg: "User registered successfully" });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to register user" });
+    console.error("Error in registerUser:", error);
+    return res.status(500).json({ msg: "Server error" });
   }
+};
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+  const particularUser = user.find(id);
+  return res.json(particularUser);
+};
+
+const deleteUser = async (req, res) => {
+  await user.findByIdAndDelete(req.params.id);
+
+  return res.status(201).json({ msg: "Deleted successfully" });
+};
+
+const updateUser = async (req, res) => {
+  const body = req.body;
+  await user.findByIdAndUpdate(req.params.id, body);
+
+  return res.status(204).json({ msg: "Updated successfully" });
 };
 
 module.exports = {
   getUser,
   registerUser,
+  getUserById,
+  deleteUser,
+  updateUser,
 };
