@@ -9,7 +9,7 @@ const store = configureStore({
     balance: blcReducer,
     expense: expenseReducer,
     users: usersReducer,
-    addUser: addUserReducer,
+    // userRegistration: addUserReducer,
   },
 });
 

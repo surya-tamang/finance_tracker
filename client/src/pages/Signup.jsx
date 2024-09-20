@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import addUser from "../redux/slices/addUser";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [error, setError] = useState("");
-
-  // ************************/ handle user data \*******************************\\
+  const [success, setSuccess] = useState("");
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -15,19 +12,40 @@ const Signup = () => {
     password: "",
   });
 
-  // ************************/ fucntion to store inputs in userData \*******************************\\
-
   const handleChange = (e) => {
+    setError("");
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
-    setError("");
+
+    if (userData.password < 5) {
+      setError("Use strong password");
+    }
   };
 
-  // ************************/ handle form submition \*******************************\\
-  const dispatch = useDispatch();
+  const registerUser = async (user) => {
+    try {
+      const response = await fetch("http://localhost:8520/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.msg || "Failed to add user");
+      }
+      return await response.json();
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  };
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,18 +53,20 @@ const Signup = () => {
     const regexp = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setError("All fields required !");
+      setError("All fields required!");
     } else if (!regexp.test(email)) {
-      setError("Invalid email !!");
-    } else if (userData.password !== confirmPassword) {
-      setError("Password doesn't match !!");
+      setError("Invalid email!");
+    } else if (password !== confirmPassword) {
+      setError("Password doesn't match!");
     } else {
       setError("");
-      dispatch(addUser(userData));
+      registerUser(userData);
+      setSuccess("Signed up successfully");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
     }
   };
-
-  // ************************/ function to handle password visibility \*******************************\\
 
   const handlePwdVisibilty = () => {
     setShowPassword(!showPassword);
@@ -55,14 +75,13 @@ const Signup = () => {
   return (
     <section className="w-full h-screen flex items-center justify-center flex-col gap-5 top-0">
       <form
-        action="/"
-        method="POST"
         autoComplete="true"
         onSubmit={handleSubmit}
         className="bg-light_blue flex flex-col p-8 rounded-xl gap-4 md:w-80 mt-10 w-auto"
       >
         <h1 className="font-medium text-lg uppercase">Register now</h1>
         <span className="text-red text-xs">{error}</span>
+        <span className="text-green text-xs">{success}</span>
         <div className="flex w-full gap-2">
           <label htmlFor="firstName" className="sr-only">
             First name
@@ -70,44 +89,42 @@ const Signup = () => {
           <input
             type="text"
             name="firstName"
-            placeholder="first name"
+            placeholder="First name"
             onChange={handleChange}
             value={userData.firstName}
             className="w-full bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
           />
           <label htmlFor="lastName" className="sr-only">
-            last name
+            Last name
           </label>
-
           <input
             type="text"
             name="lastName"
-            placeholder="last name"
+            placeholder="Last name"
             onChange={handleChange}
             value={userData.lastName}
             className="w-full bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
           />
         </div>
         <label htmlFor="email" className="sr-only">
-          email
+          Email
         </label>
-
         <input
           type="email"
           name="email"
-          placeholder="email"
+          placeholder="Email"
           onChange={handleChange}
           value={userData.email}
           className="bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
         />
         <div className="relative w-full h-auto">
           <label htmlFor="password" className="sr-only">
-            password
+            Password
           </label>
           <input
             type={`${showPassword ? "text" : "password"}`}
             name="password"
-            placeholder="password"
+            placeholder="Password"
             value={userData.password}
             onChange={handleChange}
             className="w-full h-auto bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
@@ -121,12 +138,12 @@ const Signup = () => {
         </div>
         <div className="relative w-full h-auto">
           <label htmlFor="confirmPassword" className="sr-only">
-            confirm password
+            Confirm password
           </label>
           <input
             type={`${showPassword ? "text" : "password"}`}
             name="confirmPassword"
-            placeholder="confirm password"
+            placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="w-full h-auto bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
