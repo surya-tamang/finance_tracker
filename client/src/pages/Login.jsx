@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../redux/slices/users";
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-  const {
-    data: users,
-    isLoading,
-    isError,
-  } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
 
   // ************************/ form validation \*******************************\\
 
   const [error, setError] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePwdVisibilty = () => {
     setShowPassword(!showPassword);
@@ -35,25 +23,45 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
+    setError("");
+  };
+
+  const loginUser = async (userData) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch("http://localhost:8520/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const { access, refresh } = data.access_token;
+        localStorage.setItem("accessToken", access);
+        localStorage.setItem("refreshToken", refresh);
+        navigate("/overview");
+      } else {
+        setError(data.msg);
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Unexpected error occured | Please try again");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!user.email || !user.password) {
-      setError("Please fill out all fields.");
-      return;
-    }
-
-    const matchedUser = users.find(
-      (u) => u.email === user.email && u.password === user.password
-    );
-
-    if (!matchedUser) {
-      setError("User doesn't exist");
+    const { email, password } = user;
+    if (!email || !password) {
+      setError("All fields required");
     } else {
-      setError("");
-      navigate("/overview");
+      loginUser(user);
     }
   };
 
@@ -105,6 +113,7 @@ const Login = () => {
 
         <button
           type="submit"
+          disabled={isLoading}
           className="border-2 mt-5 border-yellow py-1 rounded-md text-yellow font-medium hover:bg-yellow hover:text-deep_blue"
         >
           Log in
