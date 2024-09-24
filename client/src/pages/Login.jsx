@@ -4,14 +4,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
 
-  // ************************/ form validation \*******************************\\
-
   const [error, setError] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handlePwdVisibilty = () => {
+  const handlePwdVisibility = () => {
     setShowPassword(!showPassword);
   };
 
@@ -40,16 +37,16 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const { access, refresh } = data.access_token;
-        localStorage.setItem("accessToken", access);
-        localStorage.setItem("refreshToken", refresh);
+        const { accessToken, refreshToken } = data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         navigate("/overview");
       } else {
         setError(data.msg);
       }
     } catch (error) {
       console.log(error);
-      setError("Unexpected error occured | Please try again");
+      setError("Unexpected error occurred | Please try again");
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +56,7 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = user;
     if (!email || !password) {
-      setError("All fields required");
+      setError("All fields are required");
     } else {
       loginUser(user);
     }
@@ -84,9 +81,10 @@ const Login = () => {
           type="email"
           id="email"
           name="email"
-          placeholder="email"
+          placeholder="Email"
           value={user.email}
           onChange={handleChange}
+          aria-label="Email"
           className="bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
         />
 
@@ -98,13 +96,14 @@ const Login = () => {
             type={showPassword ? "text" : "password"}
             id="password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
             value={user.password}
             onChange={handleChange}
+            aria-label="Password"
             className="w-full h-auto bg-transparent border-b-2 p-1 border-grey outline-0 focus:border-white"
           />
           <i
-            onClick={handlePwdVisibilty}
+            onClick={handlePwdVisibility}
             className={`fa-regular ${
               showPassword ? "fa-eye" : "fa-eye-slash"
             } absolute right-2 top-2 cursor-pointer text-grey`}
@@ -116,7 +115,7 @@ const Login = () => {
           disabled={isLoading}
           className="border-2 mt-5 border-yellow py-1 rounded-md text-yellow font-medium hover:bg-yellow hover:text-deep_blue"
         >
-          Log in
+          {isLoading ? "Logging in..." : "Log in"}
         </button>
 
         <div className="text-xs flex gap-1">

@@ -16,15 +16,11 @@ const Signup = () => {
     setError("");
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
-
-    if (userData.password < 5) {
-      setError("Use strong password");
-    }
   };
 
   const registerUser = async (user) => {
     try {
-      const response = await fetch("http://localhost:8520/register", {
+      const response = await fetch("http://localhost:8520/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,11 +28,16 @@ const Signup = () => {
         body: JSON.stringify(user),
       });
 
-      if (!response.ok) {
+      if (response.ok) {
+        setSuccess("Signed up successfully");
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+        return await response.json();
+      } else {
         const errorData = await response.json();
         throw new Error(errorData.msg || "Failed to add user");
       }
-      return await response.json();
     } catch (error) {
       console.log(error);
       setError(error.message);
@@ -61,10 +62,6 @@ const Signup = () => {
     } else {
       setError("");
       registerUser(userData);
-      setSuccess("Signed up successfully");
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
     }
   };
 
