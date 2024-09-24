@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
   },
+  expenses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Expense" }],
+  revenues: [{ type: mongoose.Schema.Types.ObjectId, ref: "Revenue" }],
 });
 
 const User = mongoose.model("user", userSchema);

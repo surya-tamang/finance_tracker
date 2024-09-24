@@ -2,6 +2,8 @@ const express = require("express");
 const connectDb = require("./connection/connectDb");
 const router = require("./routes/userRouter");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const port = 8520;

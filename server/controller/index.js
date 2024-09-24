@@ -1,5 +1,6 @@
 const user = require("../model/user");
 // const bcrypt = require("bcryptjs");
+const { generateAccessToken, generateRefreshToken } = require("../jwt");
 
 // to see the users
 
@@ -29,7 +30,16 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ msg: "Incorrect email or password" });
     }
 
-    return res.status(200).json({ msg: "Login success" });
+    const accessToken = generateAccessToken(existingUser);
+    const refreshToken = generateRefreshToken(existingUser);
+
+    return res.status(200).json({
+      msg: "Login success",
+      access_token: {
+        access: accessToken,
+        refresh: refreshToken,
+      },
+    });
   } catch (error) {
     console.log("error: ", error);
     return res.status(500).json({ msg: "Server error" });
