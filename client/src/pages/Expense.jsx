@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import "../styles/expense.css";
-import { useDispatch, useSelector } from "react-redux";
-import { addExp } from "../redux/slices/expenseSlice";
 
 const Expense = () => {
-  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const expenses = useSelector((state) => state.expense);
   const [expense, setExpense] = useState({
@@ -25,7 +22,6 @@ const Expense = () => {
     if (!remark || !amount || !category) {
       setError("All fields required !");
     } else {
-      dispatch(addExp(expense));
       setExpense({ remark: "", amount: "", category: "" });
       setError("");
     }

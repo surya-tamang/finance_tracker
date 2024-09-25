@@ -20,7 +20,7 @@ const Signup = () => {
 
   const registerUser = async (user) => {
     try {
-      const response = await fetch("http://localhost:8520/signup", {
+      const response = await fetch("http://localhost:8520/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

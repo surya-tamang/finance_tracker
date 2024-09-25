@@ -1,21 +1,21 @@
 import React from "react";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
-import { useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 
 const Overview = () => {
-  const balance = useSelector((state) => state.balance);
-  console.log(balance);
+  const token = localStorage.getItem("accessToken");
+  const userData = jwtDecode(token);
   const status = [
     { name: "expense", amount: -5000, color: "#F34B49" },
-    { name: "balance", amount: balance, color: "#FDF8FA" },
+    { name: "balance", amount: userData.budget, color: "#FDF8FA" },
     { name: "revenue", amount: +5000, color: "#56F85C" },
   ];
 
   return (
     <section className="w-full min-h-screen flex justify-center px-10 flex-col gap-10 pt-20 md:pb-16 p-2">
       <h1 className="text-2xl font-medium tracking-widest capitalize mt-16">
-        Welcome, Surya
+        Welcome, {userData.firstName}
       </h1>
       <section className="flex w-full h-full md:flex-row flex-col gap-2 md:mt-6">
         <div className="md:w-7/12 md:h-auto h-screen w-full flex flex-col p-4 md:gap-16">
@@ -47,7 +47,7 @@ const Overview = () => {
         <div className="md:w-4/12 w-full h-full bg-light_blue p-4 rounded-lg">
           <PieChart />
           <div className="mt-10 capitalize">
-            <h1>balance : Rs {balance}</h1>
+            <h1>balance : Rs {userData.budget}</h1>
             <h1>expenses :</h1>
             <h1>remaining :</h1>
           </div>

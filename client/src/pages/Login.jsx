@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login = () => {
   const loginUser = async (userData) => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:8520/login", {
+      const response = await fetch("http://localhost:8520/api/login", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -38,9 +39,16 @@ const Login = () => {
 
       if (response.ok) {
         const { accessToken, refreshToken } = data;
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        navigate("/overview");
+        if (accessToken || refreshToken) {
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+        }
+        const decoded = jwtDecode(accessToken);
+        if (decoded.budget) {
+          navigate("/overview");
+        } else {
+          navigate("/setBudget");
+        }
       } else {
         setError(data.msg);
       }

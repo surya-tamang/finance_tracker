@@ -1,33 +1,43 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addBlc } from "../redux/slices/blcSlice";
 import "../styles/budget.css";
+import { jwtDecode } from "jwt-decode";
 
 const SetBudget = () => {
-  const dispatch = useDispatch();
+  const accessToken = localStorage.getItem("accessToken");
   const [budget, setBudget] = useState("");
   const navigate = useNavigate();
+  const decoded = jwtDecode(accessToken);
 
-  const handleChange = (e) => {
-    setBudget(Number(e.target.value));
-  };
+  const url = `http://localhost:8520/api/setBudget/${decoded.id}`;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (budget) {
-      dispatch(addBlc(budget));
-      navigate("/overview");
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ budget }),
+        });
+        if (response.ok) {
+          navigate("/overview");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
   return (
     <section className="budget">
       <form action="" onSubmit={handleSubmit} className="budgetform">
         <input
-          type="amount"
+          type="text"
           name="budget"
           value={budget}
-          onChange={handleChange}
+          onChange={(e) => setBudget(e.target.value)}
           placeholder="Set budget"
         />
         <button type="submit">Set</button>

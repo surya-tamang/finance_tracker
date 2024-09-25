@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
   const navList = [
     { name: "overview", path: "/overview" },
     { name: "expense", path: "/expense" },
@@ -45,7 +46,15 @@ const Header = () => {
           <i className={`fa-solid fa-angle-${showBox ? "up" : "down"}`}></i>
           <div className="box" style={{ display: showBox ? "flex" : "none" }}>
             <button>Edit profile</button>
-            <button>log out</button>
+            <button
+              onClick={() => {
+                navigate("/");
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+              }}
+            >
+              log out
+            </button>
           </div>
         </div>
       </nav>
