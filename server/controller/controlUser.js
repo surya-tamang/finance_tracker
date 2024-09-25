@@ -2,8 +2,6 @@ const user = require("../model/user");
 // const bcrypt = require("bcryptjs");
 const { generateAccessToken, generateRefreshToken } = require("../jwt");
 
-// to see the users
-
 const getUser = async (req, res) => {
   try {
     const users = await user.find({});
@@ -13,8 +11,6 @@ const getUser = async (req, res) => {
     return res.status(500).json({ error: "Unable to fetch users" });
   }
 };
-
-// to handle logins
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -35,18 +31,14 @@ const loginUser = async (req, res) => {
 
     return res.status(200).json({
       msg: "Login success",
-      access_token: {
-        access: accessToken,
-        refresh: refreshToken,
-      },
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     });
   } catch (error) {
     console.log("error: ", error);
     return res.status(500).json({ msg: "Server error" });
   }
 };
-
-// to register new user
 
 const registerUser = async (req, res) => {
   try {
@@ -85,23 +77,17 @@ const registerUser = async (req, res) => {
   }
 };
 
-// to get particular user by id
-
 const getUserById = async (req, res) => {
   const { id } = req.params;
   const particularUser = user.find(id);
   return res.json(particularUser);
 };
 
-// to delete user by id
-
 const deleteUser = async (req, res) => {
   await user.findByIdAndDelete(req.params.id);
 
   return res.status(201).json({ msg: "Deleted successfully" });
 };
-
-//to update user
 
 const updateUser = async (req, res) => {
   const body = req.body;

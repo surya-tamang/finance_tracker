@@ -3,6 +3,8 @@ const connectDb = require("./connection/connectDb");
 const router = require("./routes/userRouter");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const setBudget = require("./controller/setBudget");
+const { getUser } = require("./controller/controlUser");
 dotenv.config();
 
 const app = express();
@@ -27,6 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // routes
-app.use("/", router);
+app.get("/users", getUser);
+app.use("/api", router);
+app.post("/api/setBudget/:id", setBudget);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

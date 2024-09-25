@@ -2,15 +2,35 @@ const jwt = require("jsonwebtoken");
 const privateKey = "SurY4Fin4nce";
 
 const generateAccessToken = (user) => {
-  return jwt.sign({ id: user._id, email: user.email }, "mySecRetkeY");
+  return jwt.sign(
+    {
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      budget: user.currentBudget,
+      expense: user.expenses,
+      revenue: user.revenues,
+    },
+    "mySecRetkeY",
+    {
+      expiresIn: "15m",
+    }
+  );
 };
 
 const generateRefreshToken = (user) => {
   return jwt.sign(
-    { id: user._id },
-    process.env.REFRESH_TOKEN_SECRET || privateKey,
     {
-      expiresIn: "7d", // Token expiration time
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      budget: user.currentBudget,
+      expense: user.expenses,
+      revenue: user.revenues,
+    },
+    "mySecRetkeY",
+    {
+      expiresIn: "7d",
     }
   );
 };
