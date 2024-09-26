@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
+import ProfileBox from "./ProfileBox";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      <ProfileBox />
       <div className="menuBar">
         <i
           className="fa-solid fa-bars"

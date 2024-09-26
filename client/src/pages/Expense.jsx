@@ -3,12 +3,12 @@ import "../styles/expense.css";
 
 const Expense = () => {
   const [error, setError] = useState("");
-  const expenses = useSelector((state) => state.expense);
   const [expense, setExpense] = useState({
     remark: "",
     amount: "",
     category: "",
   });
+  const [expenses, setExpenses] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +24,7 @@ const Expense = () => {
     } else {
       setExpense({ remark: "", amount: "", category: "" });
       setError("");
+      setExpenses([...expenses, expense]);
     }
   };
 

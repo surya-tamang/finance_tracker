@@ -1,11 +1,9 @@
 import React from "react";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
-import { jwtDecode } from "jwt-decode";
+import userData from ".././userData";
 
 const Overview = () => {
-  const token = localStorage.getItem("accessToken");
-  const userData = jwtDecode(token);
   const status = [
     { name: "expense", amount: -5000, color: "#F34B49" },
     { name: "balance", amount: userData.budget, color: "#FDF8FA" },
