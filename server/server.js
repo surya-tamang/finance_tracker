@@ -25,8 +25,8 @@ const port = 8520;
 app.use(cors());
 
 // Middleware to parse JSON bodies
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(express.json({ limit: "10mb" }));
 
 // routes
 app.get("/users", getUser);

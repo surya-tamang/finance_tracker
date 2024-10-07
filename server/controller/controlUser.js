@@ -1,4 +1,5 @@
 const user = require("../model/user");
+const jwt = require("jsonwebtoken");
 // const bcrypt = require("bcryptjs");
 const { generateAccessToken, generateRefreshToken } = require("../jwt");
 
@@ -26,8 +27,28 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ msg: "Incorrect email or password" });
     }
 
-    const accessToken = generateAccessToken(existingUser);
-    const refreshToken = generateRefreshToken(existingUser);
+    const accessToken = jwt.sign(
+      {
+        id: existingUser.id,
+        email: existingUser.email,
+        password: existingUser.password,
+      },
+      "seCreTKeYOfSury4",
+      {
+        expiresIn: "15m",
+      }
+    );
+    const refreshToken = jwt.sign(
+      {
+        id: existingUser.id,
+        email: existingUser.email,
+        password: existingUser.password,
+      },
+      "seCreTKeYOfSury4",
+      {
+        expiresIn: "7d",
+      }
+    );
 
     return res.status(200).json({
       msg: "Login success",
@@ -78,9 +99,13 @@ const registerUser = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req.params;
-  const particularUser = user.find(id);
-  return res.json(particularUser);
+  try {
+    const particularUser = await user.find({ _id: req.params.id });
+    return res.status(201).json(particularUser);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Server error" });
+  }
 };
 
 const deleteUser = async (req, res) => {
@@ -96,6 +121,22 @@ const updateUser = async (req, res) => {
   return res.status(204).json({ msg: "Updated successfully" });
 };
 
+const uploadProfile = async (req, res) => {
+  const { id } = req.params;
+  const { img } = req.body;
+  try {
+    const updatedUser = await user.findByIdAndUpdate(id, { profile: img });
+    if (!updatedUser) {
+      res.status(400).json({ msg: "Failed to upload" });
+    }
+
+    res.status(201).json({ msg: "Uploaded successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "server error" });
+  }
+};
+
 module.exports = {
   getUser,
   registerUser,
@@ -103,4 +144,5 @@ module.exports = {
   deleteUser,
   updateUser,
   loginUser,
+  uploadProfile,
 };
