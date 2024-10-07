@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/revenue.css";
+import Header from "../components/Header";
 
 const Revenue = () => {
   const [revenue, setRevenue] = useState({
@@ -17,26 +18,29 @@ const Revenue = () => {
     console.log(revenue);
   };
   return (
-    <section className="revenue_section">
-      <h1>Add revenue</h1>
-      <form action="" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={revenue.remark}
-          onChange={handleChange}
-          name="remark"
-          placeholder="remarks"
-        />
-        <input
-          type="number"
-          name="amount"
-          value={revenue.amount}
-          onChange={handleChange}
-          placeholder="amount"
-        />
-        <button>Add</button>
-      </form>
-    </section>
+    <>
+      <Header />
+      <section className="revenue_section">
+        <h1>Add revenue</h1>
+        <form action="" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={revenue.remark}
+            onChange={handleChange}
+            name="remark"
+            placeholder="remarks"
+          />
+          <input
+            type="number"
+            name="amount"
+            value={revenue.amount}
+            onChange={handleChange}
+            placeholder="amount"
+          />
+          <button>Add</button>
+        </form>
+      </section>
+    </>
   );
 };
 

@@ -72,6 +72,9 @@ const Login = () => {
 
   return (
     <section className="w-full h-screen flex items-center justify-center flex-col gap-5 top-0">
+      <h1 className="uppercase text-2xl font-semibold tracking-wider text-red">
+        f i n a n c e _ t r a k c e r
+      </h1>
       <form
         action=""
         method="POST"

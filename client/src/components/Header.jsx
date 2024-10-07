@@ -5,6 +5,7 @@ import ProfileBox from "./ProfileBox";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [editProfile, setEditProfile] = useState(false);
   const navList = [
     { name: "overview", path: "/overview" },
     { name: "expense", path: "/expense" },
@@ -21,6 +22,7 @@ const Header = () => {
   const handleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+  const handleEditProfile = () => {};
 
   return (
     <header className="header">
@@ -46,7 +48,7 @@ const Header = () => {
           <div className="avatar"></div>
           <i className={`fa-solid fa-angle-${showBox ? "up" : "down"}`}></i>
           <div className="box" style={{ display: showBox ? "flex" : "none" }}>
-            <button>Edit profile</button>
+            <button onClick={() => setEditProfile(true)}>Edit profile</button>
             <button
               onClick={() => {
                 navigate("/");
@@ -59,7 +61,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <ProfileBox />
+      <ProfileBox visibleBox={editProfile} />
       <div className="menuBar">
         <i
           className="fa-solid fa-bars"

@@ -13,7 +13,6 @@ function App() {
     <>
       <div className="w-full min-h-screen bg-deep_blue text-white font-roboto">
         <Router>
-          <Header />
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
