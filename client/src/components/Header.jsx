@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import ProfileBox from "./ProfileBox";
 import { useSelector } from "react-redux";
 
 import avatar from "../assets/user.png";
+
 const Header = () => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userInfo);
-  console.log(userData);
+
   const [editProfileBox, setEditProfileBox] = useState(false);
   const navList = [
     { name: "overview", path: "/overview" },

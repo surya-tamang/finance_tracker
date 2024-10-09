@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import avatar from "../assets/user.png";
-import { jwtDecode } from "jwt-decode";
 import { useSelector } from "react-redux";
 
 const ProfileBox = ({ visibleBox, handleClick }) => {
   const userData = useSelector((state) => state.user.userInfo);
   const [image, setImage] = useState("");
-  const [user, setUser] = useState({});
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      const decoded = jwtDecode(accessToken);
-      setUser(decoded);
-    }
-  }, []);
 
-  const url = `http://localhost:8520/api/user/${user.id}`;
+  const url = `http://localhost:8520/api/user/${userData.id}`;
 
   const handleChange = async (e) => {
     const file = e.target.files[0];

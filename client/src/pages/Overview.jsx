@@ -7,16 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 
 const Overview = () => {
-  const userData = useSelector((state) => state.user.userInfo);
-  const isLoading = useSelector((state) => state.user.pending);
-  const isError = useSelector((state) => state.user.isError);
   const dispatch = useDispatch();
-  const status = [
-    { name: "expense", amount: -5000, color: "#F34B49" },
-    { name: "balance", amount: userData.currentBudget || 0, color: "#FDF8FA" },
-    { name: "revenue", amount: +5000, color: "#56F85C" },
-  ];
-
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const decoded = jwtDecode(accessToken);
@@ -27,6 +18,14 @@ const Overview = () => {
       dispatch(fetchUser(url));
     }
   }, [dispatch]);
+  const userData = useSelector((state) => state.user.userInfo);
+  const isLoading = useSelector((state) => state.user.pending);
+  const isError = useSelector((state) => state.user.isError);
+  const status = [
+    { name: "expense", amount: `- 5000`, color: "#F34B49" },
+    { name: "balance", amount: userData.currentBudget || 0, color: "#FDF8FA" },
+    { name: "revenue", amount: `+ 5000`, color: "#56F85C" },
+  ];
 
   if (isLoading) {
     return (
