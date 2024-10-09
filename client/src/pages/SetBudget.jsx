@@ -13,7 +13,7 @@ const SetBudget = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (budget) {
+    if (!budget) {
       try {
         const response = await fetch(url, {
           method: "POST",

@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
-import userData from ".././userData";
 import Header from "../components/Header";
+import { fetchUser } from "../redux/slices/userSlice";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
 
 const Overview = () => {
+  const userData = useSelector((state) => state.user.userInfo);
+  const isLoading = useSelector((state) => state.user.pending);
+  const isError = useSelector((state) => state.user.isError);
+  const dispatch = useDispatch();
   const status = [
     { name: "expense", amount: -5000, color: "#F34B49" },
-    { name: "balance", amount: userData.budget, color: "#FDF8FA" },
+    { name: "balance", amount: userData.currentBudget || 0, color: "#FDF8FA" },
     { name: "revenue", amount: +5000, color: "#56F85C" },
   ];
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const decoded = jwtDecode(accessToken);
+    const userId = decoded.id;
+
+    if (userId) {
+      const url = `http://localhost:8520/api/user/${userId}`;
+      dispatch(fetchUser(url));
+    }
+  }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <h1>Error occured...</h1>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -48,7 +81,7 @@ const Overview = () => {
           <div className="md:w-4/12 w-full h-full bg-light_blue p-4 rounded-lg">
             <PieChart />
             <div className="mt-10 capitalize">
-              <h1>balance : Rs {userData.budget}</h1>
+              <h1>balance : Rs {userData.currentBudget}</h1>
               <h1>expenses :</h1>
               <h1>remaining :</h1>
             </div>
