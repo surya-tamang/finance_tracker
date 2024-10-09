@@ -17,6 +17,6 @@ router
   .get(getUserById)
   .delete(deleteUser)
   .patch(updateUser)
-  .patch(uploadProfile);
+  .post(uploadProfile);
 
 module.exports = router;

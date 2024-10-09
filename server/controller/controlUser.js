@@ -32,6 +32,9 @@ const loginUser = async (req, res) => {
         id: existingUser.id,
         email: existingUser.email,
         password: existingUser.password,
+        currentBudget: existingUser.currentBudget,
+        expenses: existingUser.expenses,
+        revenues: existingUser.revenues,
       },
       "seCreTKeYOfSury4",
       {
@@ -43,6 +46,9 @@ const loginUser = async (req, res) => {
         id: existingUser.id,
         email: existingUser.email,
         password: existingUser.password,
+        currentBudget: existingUser.currentBudget,
+        expenses: existingUser.expenses,
+        revenues: existingUser.revenues,
       },
       "seCreTKeYOfSury4",
       {
@@ -100,7 +106,7 @@ const registerUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const particularUser = await user.find({ _id: req.params.id });
+    const particularUser = await user.findById(req.params.id);
     return res.status(201).json(particularUser);
   } catch (err) {
     console.log(err);
@@ -125,15 +131,21 @@ const uploadProfile = async (req, res) => {
   const { id } = req.params;
   const { img } = req.body;
   try {
-    const updatedUser = await user.findByIdAndUpdate(id, { profile: img });
+    const updatedUser = await user.findByIdAndUpdate(
+      id,
+      { profile: img },
+      { new: true }
+    );
     if (!updatedUser) {
-      res.status(400).json({ msg: "Failed to upload" });
+      return res.status(400).json({ msg: "Failed to upload" });
     }
 
-    res.status(201).json({ msg: "Uploaded successfully" });
+    return res
+      .status(201)
+      .json({ msg: "Uploaded successfully", updated: updatedUser });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ msg: "server error" });
+    return res.status(500).json({ msg: "Server error" });
   }
 };
 
