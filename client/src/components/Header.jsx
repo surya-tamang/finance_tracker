@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import ProfileBox from "./ProfileBox";
+import { useSelector } from "react-redux";
 
+import avatar from "../assets/user.png";
 const Header = () => {
   const navigate = useNavigate();
-  const [editProfile, setEditProfile] = useState(false);
+  const userData = useSelector((state) => state.user.userInfo);
+  console.log(userData);
+  const [editProfileBox, setEditProfileBox] = useState(false);
   const navList = [
     { name: "overview", path: "/overview" },
     { name: "expense", path: "/expense" },
@@ -19,10 +23,13 @@ const Header = () => {
     setShowBox(!showBox);
   };
 
+  const handleEditProfileBox = () => {
+    setEditProfileBox(!editProfileBox);
+  };
+
   const handleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
-  const handleEditProfile = () => {};
 
   return (
     <header className="header">
@@ -45,10 +52,16 @@ const Header = () => {
           ))}
         </ul>
         <div className="profile" onClick={handleProfile}>
-          <div className="avatar"></div>
+          <div className="avatar">
+            <img
+              src={userData.profile || avatar}
+              alt="avatar"
+              className="rounded-full h-10 w-10"
+            />
+          </div>
           <i className={`fa-solid fa-angle-${showBox ? "up" : "down"}`}></i>
           <div className="box" style={{ display: showBox ? "flex" : "none" }}>
-            <button onClick={() => setEditProfile(true)}>Edit profile</button>
+            <button onClick={handleEditProfileBox}>Edit profile</button>
             <button
               onClick={() => {
                 navigate("/");
@@ -61,7 +74,10 @@ const Header = () => {
           </div>
         </div>
       </nav>
-      <ProfileBox visibleBox={editProfile} />
+      <ProfileBox
+        visibleBox={editProfileBox}
+        handleClick={handleEditProfileBox}
+      />
       <div className="menuBar">
         <i
           className="fa-solid fa-bars"

@@ -55,13 +55,6 @@
     gap: 5px;
 }
 
-.profile .avatar {
-    width: 2.5rem;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #545454;
-}
-
 .profile .box button {
     background-color: none;
     border: none;
@@ -105,11 +98,6 @@
 
     .header nav ul {
         flex-direction: column;
-    }
-
-
-    .profile .avatar {
-        background-color: red;
     }
 
     .menuBar {
