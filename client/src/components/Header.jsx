@@ -57,7 +57,7 @@ const Header = () => {
             <img
               src={userData.profile || avatar}
               alt="avatar"
-              className="rounded-full h-10 w-10"
+              className="rounded-full h-10 w-10 object-cover"
             />
           </div>
           <i className={`fa-solid fa-angle-${showBox ? "up" : "down"}`}></i>
