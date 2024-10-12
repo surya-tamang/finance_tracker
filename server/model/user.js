@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
   },
   currentBudget: {
-    type: String,
+    type: Number,
   },
   expenses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Expense" }],
   revenues: [{ type: mongoose.Schema.Types.ObjectId, ref: "Revenue" }],

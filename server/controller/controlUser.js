@@ -121,15 +121,43 @@ const deleteUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const body = req.body;
-  await user.findByIdAndUpdate(req.params.id, body);
+  const { id } = req.params;
+  const { firstName, lastName, currentBudget, profile, email, password } =
+    req.body;
 
-  return res.status(204).json({ msg: "Updated successfully" });
+  try {
+    const updatedUser = await user.findByIdAndUpdate(
+      id,
+      {
+        ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
+        ...(password && { password }),
+        ...(currentBudget && { currentBudget }),
+        ...(profile && { profile }),
+        ...(email && { email }),
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ msg: "Updated successfully", updated: updatedUser });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "Server error" });
+  }
 };
 
 const uploadProfile = async (req, res) => {
   const { id } = req.params;
   const { img } = req.body;
+  if (!img) {
+    return res.status(400).json({ msg: "No image provided" });
+  }
   try {
     const updatedUser = await user.findByIdAndUpdate(
       id,
@@ -140,9 +168,10 @@ const uploadProfile = async (req, res) => {
       return res.status(400).json({ msg: "Failed to upload" });
     }
 
-    return res
-      .status(201)
-      .json({ msg: "Uploaded successfully", updated: updatedUser });
+    return res.status(201).json({
+      msg: "Uploaded successfully from upload profile",
+      updated: updatedUser,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Server error" });

@@ -14,7 +14,9 @@ const port = 8520;
 
 (async () => {
   try {
-    await connectDb("mongodb://localhost:27017/finance_tracker");
+    await connectDb(
+      "mongodb+srv://tmgsurya055:niA9hdlanUw2FzJQ@financetracker.g6oyf.mongodb.net/finance_tracker?retryWrites=true&w=majority&appName=financeTracker"
+    );
     console.log("Connected to server");
   } catch (error) {
     console.error(error);
