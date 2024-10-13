@@ -21,3 +21,7 @@
     border: 3px solid #545454;
     /* creates padding around scroll thumb */
 }
+
+body.no_scroll {
+    overflow: hidden;
+}

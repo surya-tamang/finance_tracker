@@ -9,6 +9,7 @@ const UpdateDetail = () => {
   const [updatedInfo, setUpdatedInfo] = useState({
     firstName: "",
     lastName: "",
+    currentBudget: "",
   });
 
   const handleFormChange = (e) => {
@@ -59,6 +60,14 @@ const UpdateDetail = () => {
         onChange={handleFormChange}
         value={updatedInfo.lastName}
         placeholder="last name"
+        className="text-black"
+      />
+      <input
+        type="text"
+        name="currentBudget"
+        onChange={handleFormChange}
+        value={updatedInfo.lastName}
+        placeholder="current budget"
         className="text-black"
       />
       <span className="text-red">{errorMsg}</span>

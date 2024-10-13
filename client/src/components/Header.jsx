@@ -5,12 +5,14 @@ import ProfileBox from "./ProfileBox";
 import { useSelector } from "react-redux";
 
 import avatar from "../assets/user.png";
+import ManagePwd from "./ManagePwd";
 
 const Header = () => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userInfo);
 
   const [editProfileBox, setEditProfileBox] = useState(false);
+  const [managePwd, setManagePwd] = useState(false);
   const navList = [
     { name: "overview", path: "/overview" },
     { name: "expense", path: "/expense" },
@@ -26,6 +28,16 @@ const Header = () => {
 
   const handleEditProfileBox = () => {
     setEditProfileBox(!editProfileBox);
+    !editProfileBox
+      ? document.body.classList.add("no_scroll")
+      : document.body.classList.remove("no_scroll");
+  };
+
+  const handleManangePwd = () => {
+    setManagePwd(!managePwd);
+    !managePwd
+      ? document.body.classList.add("no_scroll")
+      : document.body.classList.remove("no_scroll");
   };
 
   const handleNav = () => {
@@ -63,6 +75,7 @@ const Header = () => {
           <i className={`fa-solid fa-angle-${showBox ? "up" : "down"}`}></i>
           <div className="box" style={{ display: showBox ? "flex" : "none" }}>
             <button onClick={handleEditProfileBox}>Edit profile</button>
+            <button onClick={handleManangePwd}>Change Password</button>
             <button
               onClick={() => {
                 navigate("/");
@@ -79,6 +92,7 @@ const Header = () => {
         visibleBox={editProfileBox}
         handleClick={handleEditProfileBox}
       />
+      <ManagePwd visibleBox={managePwd} handleClick={handleManangePwd} />
       <div className="menuBar">
         <i
           className="fa-solid fa-bars"
