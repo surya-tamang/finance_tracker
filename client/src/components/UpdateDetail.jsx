@@ -66,7 +66,7 @@ const UpdateDetail = () => {
         type="text"
         name="currentBudget"
         onChange={handleFormChange}
-        value={updatedInfo.lastName}
+        value={updatedInfo.currentBudget}
         placeholder="current budget"
         className="text-black"
       />

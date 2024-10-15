@@ -8,7 +8,9 @@ const ManagePwd = ({ visibleBox, handleClick }) => {
   const [updatedPwd, setUpdatedPwd] = useState("");
   const [confirmPwd, setConfirmPwd] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [updated, setUpdated] = useState("");
   const handleSubmit = async (e) => {
+    setErrorMsg("");
     e.preventDefault();
     if (!currentPwd || !updatedPwd || !confirmPwd) {
       setErrorMsg("All fields required");
@@ -27,6 +29,10 @@ const ManagePwd = ({ visibleBox, handleClick }) => {
             body: JSON.stringify({ password: updatedPwd }),
           });
           const data = await response.json();
+          setUpdated(data.msg);
+          setTimeout(() => {
+            handleClick();
+          }, 1000);
         } catch (err) {
           console.log(err);
         }
@@ -54,6 +60,7 @@ const ManagePwd = ({ visibleBox, handleClick }) => {
         className="w-full justify-end rounded-none bg-white text-black"
       >
         <span className="text-red pb-5">{errorMsg}</span>
+        <span className="text-green pb-5">{updated}</span>
         <input
           type="password"
           value={currentPwd}

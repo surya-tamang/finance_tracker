@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../styles/expense.css";
 import Header from "../components/Header";
-import { fetchUser } from "../redux/slices/userSlice";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Expense = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    const decoded = jwtDecode(accessToken);
-    const userId = decoded.id;
-
-    if (userId) {
-      const url = `http://localhost:8520/api/user/${userId}`;
-      dispatch(fetchUser(url));
-    }
-  }, [dispatch]);
   const userData = useSelector((state) => state.user.userInfo);
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
