@@ -10,6 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./redux/slices/userSlice";
 import { fetchUserExpense } from "./redux/slices/userExpenses";
+import { fetchUserRevenue } from "./redux/slices/userRevenues";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,8 +21,10 @@ function App() {
       const userid = decoded.id;
       const url = `http://localhost:8520/api/user/${userid}`;
       const url1 = `http://localhost:8520/api/user/expenses/${userid}`;
+      const url2 = `http://localhost:8520/api/user/revenues/${userid}`;
       dispatch(fetchUser(url));
       dispatch(fetchUserExpense(url1));
+      dispatch(fetchUserRevenue(url2));
     }
   }, [dispatch]);
 

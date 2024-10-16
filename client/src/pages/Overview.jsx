@@ -7,7 +7,12 @@ import { useSelector } from "react-redux";
 const Overview = () => {
   const userData = useSelector((state) => state.user.userInfo);
   const userExpenses = useSelector((state) => state.userExpenses.data);
+  const userRevenues = useSelector((state) => state.userRevenues.data);
   const totalExpense = userExpenses.reduce(
+    (total, item) => (total += Number(item.amount)),
+    0
+  );
+  const totalRevenue = userRevenues.reduce(
     (total, item) => (total += Number(item.amount)),
     0
   );
@@ -16,7 +21,7 @@ const Overview = () => {
   const status = [
     { name: "expense", amount: `- ${totalExpense}`, color: "#F34B49" },
     { name: "balance", amount: userData.currentBudget || 0, color: "#FDF8FA" },
-    { name: "revenue", amount: `+ 5000`, color: "#56F85C" },
+    { name: "revenue", amount: `+ ${totalRevenue}`, color: "#56F85C" },
   ];
 
   if (isLoading) {

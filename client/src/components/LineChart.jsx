@@ -1,5 +1,4 @@
 import { Line } from "react-chartjs-2";
-import { LineCharData } from "../../fakeData";
 import {
   Chart as Chartjs,
   CategoryScale,
