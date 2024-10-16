@@ -7,9 +7,12 @@ const Revenue = () => {
   const userData = useSelector((state) => state.user.userInfo);
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
+  const currentDate = new Date().toLocaleDateString();
+
   const [revenue, setRevenue] = useState({
-    remark: "",
+    source: "",
     amount: "",
+    date: currentDate,
   });
 
   const handleChange = (e) => {
@@ -29,10 +32,10 @@ const Revenue = () => {
         <form action="" onSubmit={handleSubmit}>
           <input
             type="text"
-            value={revenue.remark}
+            value={revenue.source}
             onChange={handleChange}
-            name="remark"
-            placeholder="remarks"
+            name="source"
+            placeholder="source"
           />
           <input
             type="number"

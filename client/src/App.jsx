@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Overview from "./pages/Overview";
 import Revenue from "./pages/Revenue";
 import Expense from "./pages/Expense";
 import SetBudget from "./pages/SetBudget";
+import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./redux/slices/userSlice";
-import { jwtDecode } from "jwt-decode";
+import { fetchUserExpense } from "./redux/slices/userExpenses";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +19,9 @@ function App() {
       const decoded = jwtDecode(accessToken);
       const userid = decoded.id;
       const url = `http://localhost:8520/api/user/${userid}`;
+      const url1 = `http://localhost:8520/api/user/expenses/${userid}`;
       dispatch(fetchUser(url));
+      dispatch(fetchUserExpense(url1));
     }
   }, [dispatch]);
 

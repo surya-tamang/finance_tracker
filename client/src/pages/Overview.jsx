@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 
 const Overview = () => {
   const userData = useSelector((state) => state.user.userInfo);
+  const userExpenses = useSelector((state) => state.userExpenses);
+  console.log(userExpenses);
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
   const status = [

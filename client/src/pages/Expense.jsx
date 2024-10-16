@@ -8,10 +8,13 @@ const Expense = () => {
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
   const [error, setError] = useState("");
+  const currentDate = new Date().toLocaleDateString();
+  const url = `http://localhost:8520/api/user/${userData._id}/expenses`;
   const [expense, setExpense] = useState({
-    remark: "",
     amount: "",
     category: "",
+    purpose: "",
+    date: currentDate,
   });
   const [expenses, setExpenses] = useState([]);
 
@@ -20,16 +23,29 @@ const Expense = () => {
     setExpense({ ...expense, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { remark, amount, category } = expense;
+    const { purpose, amount, category } = expense;
 
-    if (!remark || !amount || !category) {
+    if (!purpose || !amount || !category) {
       setError("All fields required !");
     } else {
-      setExpense({ remark: "", amount: "", category: "" });
+      setExpense({ amount: "", purpose: "", category: "" });
       setError("");
       setExpenses([...expenses, expense]);
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(expense),
+        });
+        const data = await response.json();
+        console.log(data.msg);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -41,18 +57,18 @@ const Expense = () => {
           <h1>Add today's expenses</h1>
           <form action="" onSubmit={handleSubmit}>
             <input
-              type="text"
-              name="remark"
-              value={expense.remark}
-              onChange={handleChange}
-              placeholder="remarks"
-            />
-            <input
               type="number"
               name="amount"
               value={expense.amount}
               onChange={handleChange}
               placeholder="amount"
+            />
+            <input
+              type="text"
+              name="purpose"
+              value={expense.purpose}
+              onChange={handleChange}
+              placeholder="purpose"
             />
             <select
               name="category"
@@ -80,7 +96,7 @@ const Expense = () => {
               <thead>
                 <tr>
                   <th>SN</th>
-                  <th>remarks</th>
+                  <th>purposes</th>
                   <th>category</th>
                   <th>amount</th>
                 </tr>
@@ -88,11 +104,11 @@ const Expense = () => {
 
               <tbody>
                 {expenses.map((item, index) => {
-                  const { remark, amount, category } = item;
+                  const { purpose, amount, category } = item;
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{remark}</td>
+                      <td>{purpose}</td>
                       <td>{category}</td>
                       <td>{`Rs ${amount}`}</td>
                     </tr>
