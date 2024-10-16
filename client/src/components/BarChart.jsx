@@ -1,5 +1,4 @@
 import { Bar } from "react-chartjs-2";
-import { barChartData } from "../../fakeData";
 import {
   Chart as Chartjs,
   CategoryScale,
@@ -20,6 +19,24 @@ Chartjs.register(
 );
 
 const BarChart = () => {
+  const barChartData = {
+    labels: [
+      "Rent",
+      "Grocceries",
+      "Utilities",
+      "Entertainment",
+      "Transportation",
+    ],
+    datasets: [
+      {
+        label: "expenses",
+        data: [1220, 300, 500, 800, 2000],
+        backgroundColor: ["#FDF8FA"],
+        borderColor: ["#FDF8FA"],
+        borderwidth: 1,
+      },
+    ],
+  };
   const option = {
     responsive: true,
     plugins: {

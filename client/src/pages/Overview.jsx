@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
 import Header from "../components/Header";
@@ -6,12 +6,15 @@ import { useSelector } from "react-redux";
 
 const Overview = () => {
   const userData = useSelector((state) => state.user.userInfo);
-  const userExpenses = useSelector((state) => state.userExpenses);
-  console.log(userExpenses);
+  const userExpenses = useSelector((state) => state.userExpenses.data);
+  const totalExpense = userExpenses.reduce(
+    (total, item) => (total += Number(item.amount)),
+    0
+  );
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
   const status = [
-    { name: "expense", amount: `- 5000`, color: "#F34B49" },
+    { name: "expense", amount: `- ${totalExpense}`, color: "#F34B49" },
     { name: "balance", amount: userData.currentBudget || 0, color: "#FDF8FA" },
     { name: "revenue", amount: `+ 5000`, color: "#56F85C" },
   ];
@@ -69,9 +72,8 @@ const Overview = () => {
           <div className="md:w-4/12 w-full h-full bg-light_blue p-4 rounded-lg">
             <PieChart />
             <div className="mt-10 capitalize">
-              <h1>balance : Rs {userData.currentBudget}</h1>
-              <h1>expenses :</h1>
-              <h1>remaining :</h1>
+              <h1>remaining : Rs {userData.currentBudget}</h1>
+              <h1>expenses : Rs {totalExpense}</h1>
             </div>
           </div>
         </section>

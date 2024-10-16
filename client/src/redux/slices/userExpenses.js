@@ -15,7 +15,7 @@ export const fetchUserExpense = createAsyncThunk(
 const userExpenseSlice = createSlice({
   name: "userExpenses",
   initialState: {
-    userExpenses: [],
+    data: [],
     pending: false,
     isError: false,
   },
@@ -27,7 +27,7 @@ const userExpenseSlice = createSlice({
       })
       .addCase(fetchUserExpense.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.userExpenses = action.payload;
+        state.data = action.payload;
         state.isError = false;
       })
       .addCase(fetchUserExpense.rejected, (state) => {

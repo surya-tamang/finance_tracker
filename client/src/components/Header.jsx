@@ -46,7 +46,9 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1 className="logo">F.T</h1>
+      <NavLink to="/overview" className="logo">
+        F.T
+      </NavLink>
       <nav className={`${isNavOpen ? "yesnav" : "nonav"}`}>
         <ul>
           {navList.map((item, index) => (

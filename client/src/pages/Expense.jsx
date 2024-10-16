@@ -5,11 +5,13 @@ import { useSelector } from "react-redux";
 
 const Expense = () => {
   const userData = useSelector((state) => state.user.userInfo);
+  const userExpenses = useSelector((state) => state.userExpenses.data);
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
   const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const currentDate = new Date().toLocaleDateString();
-  const url = `http://localhost:8520/api/user/${userData._id}/expenses`;
+  const url = `http://localhost:8520/api/user/expenses/${userData._id}`;
   const [expense, setExpense] = useState({
     amount: "",
     category: "",
@@ -21,10 +23,13 @@ const Expense = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setExpense({ ...expense, [name]: value });
+    setError("");
+    setSuccessMsg("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     const { purpose, amount, category } = expense;
 
     if (!purpose || !amount || !category) {
@@ -42,7 +47,7 @@ const Expense = () => {
           body: JSON.stringify(expense),
         });
         const data = await response.json();
-        console.log(data.msg);
+        setSuccessMsg(data.msg);
       } catch (err) {
         console.log(err);
       }
@@ -55,7 +60,7 @@ const Expense = () => {
       <section className="expense_section">
         <div className="container">
           <h1>Add today's expenses</h1>
-          <form action="" onSubmit={handleSubmit}>
+          <form action="POST" onSubmit={handleSubmit}>
             <input
               type="number"
               name="amount"
@@ -81,29 +86,31 @@ const Expense = () => {
               </option>
               <option value="food">Food</option>
               <option value="stationary">Stationary</option>
-              <option value="medicine">Medicine</option>
-              <option value="wears">wears</option>
+              <option value="medicine">Health</option>
+              <option value="wears">Clothes and Shoes</option>
               <option value="grocceries">Grocceries</option>
               <option value="transportation">Transportation</option>
+              <option value="travelling">Travelling</option>
               <option value="extra">Extra</option>
             </select>
             <span id="error">{error}</span>
+            <span className="text-green">{successMsg}</span>
             <button type="submit">Add</button>
           </form>
           <div className="table_container">
             <table border="1">
-              <caption>Statements</caption>
+              <caption>Monthly Statements</caption>
               <thead>
                 <tr>
                   <th>SN</th>
-                  <th>purposes</th>
+                  <th>purpose</th>
                   <th>category</th>
                   <th>amount</th>
                 </tr>
               </thead>
 
               <tbody>
-                {expenses.map((item, index) => {
+                {userExpenses.map((item, index) => {
                   const { purpose, amount, category } = item;
                   return (
                     <tr key={index}>
@@ -121,7 +128,7 @@ const Expense = () => {
                   <td colSpan="3">total</td>
                   <td>
                     {`Rs
-                  ${expenses.reduce(
+                  ${userExpenses.reduce(
                     (total, item) => (total += Number(item.amount)),
                     0
                   )}`}
