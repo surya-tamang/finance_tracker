@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
   currentBudget: {
     type: Number,
   },
-  expenses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Expense" }],
-  revenues: [{ type: mongoose.Schema.Types.ObjectId, ref: "Revenue" }],
+  expenses: [{ type: mongoose.Schema.Types.ObjectId, ref: "expense" }],
+  revenues: [{ type: mongoose.Schema.Types.ObjectId, ref: "revenue" }],
 });
 
 const User = mongoose.model("user", userSchema);

@@ -71,13 +71,11 @@ const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
 
-    // Validate required fields
     if (!firstName || !lastName || !email || !password) {
       console.log("Validation failed: Missing fields");
       return res.status(400).json({ msg: "All fields are required" });
     }
 
-    // Check if the user already exists
     const existingUser = await user.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
@@ -87,7 +85,6 @@ const registerUser = async (req, res) => {
     // const salt = await bcrypt.genSalt(10);
     // const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create a new user
     const newUser = new user({
       firstName,
       lastName,
