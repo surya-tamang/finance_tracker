@@ -11,6 +11,7 @@ const addExpense = async (req, res) => {
     await newExpense.save();
 
     const updatedUser = await user.findById(userId);
+    updatedUser.currentBudget -= amount;
     updatedUser.expenses.push(newExpense._id);
     await updatedUser.save();
 
