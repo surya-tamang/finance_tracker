@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import ProfileBox from "./ProfileBox";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import avatar from "../assets/user.png";
 import ManagePwd from "./ManagePwd";
+import { clearUser } from "../redux/slices/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userInfo);
 
   const [editProfileBox, setEditProfileBox] = useState(false);
@@ -81,6 +83,7 @@ const Header = () => {
             <button
               onClick={() => {
                 navigate("/");
+                dispatch(clearUser());
                 localStorage.removeItem("accessToken");
                 localStorage.removeItem("refreshToken");
               }}
