@@ -103,7 +103,10 @@ const registerUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const particularUser = await user.findById(req.params.id);
+    const particularUser = await user
+      .findById(req.params.id)
+      .populate("expenses")
+      .populate("revenues");
     return res.status(201).json(particularUser);
   } catch (err) {
     console.log(err);

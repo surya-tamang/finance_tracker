@@ -1,5 +1,6 @@
 import React from "react";
 import LineChart from "../components/LineChart";
+import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
@@ -71,7 +72,7 @@ const Overview = () => {
               })}
             </div>
             <div className="w-full flex items-center justify-center bg-white">
-              <LineChart />
+              <BarChart />
             </div>
           </div>
           <div className="md:w-4/12 w-full h-full bg-light_blue p-4 rounded-lg">

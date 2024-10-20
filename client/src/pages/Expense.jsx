@@ -99,7 +99,7 @@ const Expense = () => {
           </form>
           <div className="table_container">
             <table border="1">
-              <caption>Monthly Statements</caption>
+              <caption>Expense Statements</caption>
               <thead>
                 <tr>
                   <th>SN</th>

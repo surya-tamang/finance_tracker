@@ -25,12 +25,15 @@ const BarChart = () => {
       "Grocceries",
       "Utilities",
       "Entertainment",
+      "Clothing and shoes",
       "Transportation",
+      "Travelling",
+      "Extra",
     ],
     datasets: [
       {
         label: "expenses",
-        data: [1220, 300, 500, 800, 2000],
+        data: [1220, 300, 500, 800, 2000, 3000, 4000, 500],
         backgroundColor: ["#FDF8FA"],
         borderColor: ["#FDF8FA"],
         borderwidth: 1,

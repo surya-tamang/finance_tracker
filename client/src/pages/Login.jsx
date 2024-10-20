@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "../redux/slices/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +46,8 @@ const Login = () => {
           localStorage.setItem("refreshToken", refreshToken);
         }
         const decoded = jwtDecode(accessToken);
-
+        const url = `http://localhost:8520/api/user/${decoded.id}`;
+        dispatch(fetchUser(url));
         if (decoded.currentBudget) {
           navigate("/overview");
         } else {
