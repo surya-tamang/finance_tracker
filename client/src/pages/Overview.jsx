@@ -46,7 +46,7 @@ const Overview = () => {
       <Header />
       <section className="w-full min-h-screen flex justify-center px-10 flex-col gap-10 pt-20 md:pb-16 p-2">
         <h1 className="text-2xl font-medium tracking-widest capitalize mt-16">
-          Welcome, {userData.firstName}
+          Welcome, {userData.firstName} {userData.lastName}
         </h1>
         <section className="flex w-full h-full md:flex-row flex-col gap-2 md:mt-6">
           <div className="md:w-7/12 md:h-auto h-screen w-full flex flex-col p-4 md:gap-16">

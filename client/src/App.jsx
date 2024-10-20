@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { fetchUser } from "./redux/slices/userSlice";
 import { fetchUserExpense } from "./redux/slices/userExpenses";
 import { fetchUserRevenue } from "./redux/slices/userRevenues";
+import Footer from "./components/Footer";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,13 +35,15 @@ function App() {
       <div className="w-full min-h-screen bg-deep_blue text-white font-roboto">
         <Router>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/setBudget" element={<SetBudget />} />
             <Route path="/overview" element={<Overview />} />
             <Route path="/revenue" element={<Revenue />} />
             <Route path="/expense" element={<Expense />} />
           </Routes>
+          <Footer />
         </Router>
       </div>
     </>

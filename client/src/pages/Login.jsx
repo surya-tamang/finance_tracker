@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../redux/slices/userSlice";
+import { clearUser } from "../redux/slices/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -45,6 +46,8 @@ const Login = () => {
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", refreshToken);
         }
+        dispatch(clearUser());
+
         const decoded = jwtDecode(accessToken);
         const url = `http://localhost:8520/api/user/${decoded.id}`;
         dispatch(fetchUser(url));

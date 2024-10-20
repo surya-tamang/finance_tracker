@@ -27,6 +27,11 @@ const Expense = () => {
     setSuccessMsg("");
   };
 
+  const totalExpense = userExpenses.reduce(
+    (total, item) => (total += Number(item.amount)),
+    0
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -34,6 +39,8 @@ const Expense = () => {
 
     if (!purpose || !amount || !category) {
       setError("All fields required !");
+    } else if (totalExpense >= userData.currentBudget) {
+      setError("Not enough balance!!");
     } else {
       setExpense({ amount: "", purpose: "", category: "" });
       setError("");
@@ -105,18 +112,20 @@ const Expense = () => {
                   <th>SN</th>
                   <th>purpose</th>
                   <th>category</th>
+                  <th>date</th>
                   <th>amount</th>
                 </tr>
               </thead>
 
               <tbody>
                 {userExpenses.map((item, index) => {
-                  const { purpose, amount, category } = item;
+                  const { purpose, amount, category, date } = item;
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{purpose}</td>
                       <td>{category}</td>
+                      <td>{date.split("T")[0]}</td>
                       <td>{`Rs ${amount}`}</td>
                     </tr>
                   );
@@ -125,14 +134,8 @@ const Expense = () => {
 
               <tfoot>
                 <tr>
-                  <td colSpan="3">total</td>
-                  <td>
-                    {`Rs
-                  ${userExpenses.reduce(
-                    (total, item) => (total += Number(item.amount)),
-                    0
-                  )}`}
-                  </td>
+                  <td colSpan="4">total</td>
+                  <td>{`Rs ${totalExpense}`}</td>
                 </tr>
               </tfoot>
             </table>
