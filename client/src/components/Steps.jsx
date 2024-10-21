@@ -27,9 +27,9 @@ const Steps = () => {
         const { step, des } = item;
         return (
           <div key={index} className="md:h-28 relative">
-            <span className="h-24 w-2 left-3 bg-yellow absolute bottom-0"></span>
+            <span className="h-28 w-2 left-3 bg-yellow absolute bottom-0"></span>
             <span className="h-8 w-8 rounded-full bg-yellow absolute top-0"></span>
-            <article className="ml-20">
+            <article className="ml-20 pt-4">
               <h1 className="font-semibold text-xl capitalize">
                 Step {index + 1}: {step}
               </h1>
