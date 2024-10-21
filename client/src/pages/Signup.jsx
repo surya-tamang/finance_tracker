@@ -71,9 +71,12 @@ const Signup = () => {
 
   return (
     <section className="w-full h-screen flex items-center justify-center flex-col gap-5 top-0">
-      <h1 className="uppercase text-2xl font-semibold tracking-wider text-red">
+      <NavLink
+        to="/"
+        className="uppercase text-2xl font-semibold tracking-wider text-red"
+      >
         f i n a n c e _ t r a k c e r
-      </h1>
+      </NavLink>
       <form
         autoComplete="true"
         onSubmit={handleSubmit}
@@ -163,7 +166,7 @@ const Signup = () => {
         </button>
         <div className="text-xs flex gap-1">
           <h3>Already have an account?</h3>
-          <NavLink to="/" className="text-yellow underline">
+          <NavLink to="/login" className="text-yellow underline">
             Login now
           </NavLink>
         </div>

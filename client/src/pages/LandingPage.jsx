@@ -1,27 +1,35 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../styles/landingpage.css";
 import Heading from "../components/Heading";
 import Features from "../components/Features";
+import Steps from "../components/Steps";
+import FAQs from "../components/FAQs";
+import { Link } from "react-scroll";
+import Nav from "../components/Nav";
 
 const LandingPage = () => {
   return (
-    <div className="w-full min-h-screen">
+    <main className="w-full min-h-screen">
+      <Link
+        to="hero"
+        offset={-10}
+        duration={500}
+        spy={true}
+        smooth={true}
+        className="fixed bg-yellow text-deep_blue cursor-pointer h-16 w-16 rounded-full bottom-10 right-10 text-xl flex justify-center items-center"
+      >
+        <i class="fa-solid fa-arrow-up"></i>
+      </Link>
       <section id="hero" className="h-screen flex items-center mb-16">
         <header className="w-full absolute top-0 px-10 flex items-center justify-between">
-          <h1 className="text-red text-3xl font-bold">F.T</h1>
-          <nav>
-            <ul className="flex gap-8 py-6">
-              <Link className="hover:text-yellow">Tutorial</Link>
-              <Link className="hover:text-yellow">About us</Link>
-              <Link className="hover:text-yellow">FAQs</Link>
-            </ul>
-          </nav>
+          <h1 className="text-red text-3xl font-bold py-4">F.T</h1>
+          <Nav />
           <NavLink to="/login" className="hover:text-yellow font-semibold">
             Login
           </NavLink>
         </header>
-        <article className="ml-16">
+        <article className="md:ml-16 ml-8">
           <h1 className="md:text-5xl text-3xl font-semibold my-8">
             Track your finances with ease
           </h1>
@@ -37,11 +45,49 @@ const LandingPage = () => {
           </NavLink>
         </article>
       </section>
-      <section className="flex items-center justify-center flex-col my-4">
+
+      <section
+        id="features"
+        className="flex items-center justify-center flex-col my-10"
+      >
         <Heading text="powerful features to track your finances" />
         <Features />
       </section>
-    </div>
+
+      <section
+        id="steps"
+        className="flex items-center justify-center flex-col my-10"
+      >
+        <Heading text="manage your finances in 5 easy steps" />
+        <Steps />
+      </section>
+
+      <section
+        id="about"
+        className="flex items-center justify-center flex-col my-20"
+      >
+        <Heading text="About us" />
+        <article className="w-10/12">
+          <p className="text-center mt-16">
+            We are a team of passionate developers and finance enthusiasts who
+            believe in empowering individuals to take control of their finances.
+            Our mission is to provide an intuitive, user-friendly finance
+            tracker to help users manage their expenses, track revenue, and
+            reach their financial goals. With a focus on simplicity and
+            transparency, we aim to make financial management accessible to
+            everyone.
+          </p>
+        </article>
+      </section>
+
+      <section
+        id="faq"
+        className="flex items-center justify-center flex-col my-32"
+      >
+        <Heading text="Frequently Asked Questions" />
+        <FAQs />
+      </section>
+    </main>
   );
 };
 
