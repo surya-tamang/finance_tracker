@@ -38,16 +38,15 @@ const loginAdmin = async (req, res) => {
     );
 
     if (!isPasswordCorrect) {
-      return res.status(401).json({ msg: "Incorrect email or password" });
+      return res
+        .status(401)
+        .json({ ok: false, msg: "Incorrect email or password" });
     }
     const accessToken = jwt.sign(
       {
-        id: existingUser.id,
-        email: existingUser.email,
-        password: existingUser.password,
-        currentBudget: existingUser.currentBudget,
-        expenses: existingUser.expenses,
-        revenues: existingUser.revenues,
+        id: existingAdmin.id,
+        name: existingAdmin.name,
+        email: existingAdmin.email,
       },
       "seCreTKeYOfSury4",
       {
@@ -56,12 +55,9 @@ const loginAdmin = async (req, res) => {
     );
     const refreshToken = jwt.sign(
       {
-        id: existingUser.id,
-        email: existingUser.email,
-        password: existingUser.password,
-        currentBudget: existingUser.currentBudget,
-        expenses: existingUser.expenses,
-        revenues: existingUser.revenues,
+        id: existingAdmin.id,
+        name: existingAdmin.name,
+        email: existingAdmin.email,
       },
       "seCreTKeYOfSury4",
       {
@@ -70,6 +66,7 @@ const loginAdmin = async (req, res) => {
     );
 
     return res.status(200).json({
+      ok: true,
       msg: "Login success",
       accessToken: accessToken,
       refreshToken: refreshToken,
