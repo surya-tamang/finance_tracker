@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center">
       <Heading text="Admin dashboard" />
-      <main className="w-11/12">
+      <main className="w-11/12 overflow-y-auto">
         <h1>Users</h1>
         <table>
           <thead>
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
                       <i className="fa-solid fa-trash"></i>
                     </button>
                     <button className="hover:bg-transparent hover:text-yellow">
-                      <i class="fa-solid fa-pen-to-square"></i>
+                      <i className="fa-solid fa-pen-to-square"></i>
                     </button>
                   </td>
                 </tr>

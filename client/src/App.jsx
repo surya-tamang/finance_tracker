@@ -14,6 +14,7 @@ import { fetchUserRevenue } from "./redux/slices/userRevenues";
 import Footer from "./components/Footer";
 import LandingPage from "./pages/LandingPage";
 import AdminDashboard from "./pages/AdminDashboard";
+import Adminlogin from "./pages/Adminlogin";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/admin/login" element={<Adminlogin />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/setBudget" element={<SetBudget />} />
