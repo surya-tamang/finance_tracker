@@ -4,7 +4,7 @@ const revenueSchema = mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
   source: { type: String, required: true },
   amount: { type: Number, required: true },
-  date: { type: Date, default: Date.now },
+  date: { type: Date },
 });
 
 const revenue = mongoose.model("revenue", revenueSchema);

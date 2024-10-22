@@ -1,15 +1,14 @@
-const user = require("../model/user");
+const User = require("../model/user");
 const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
-const { generateAccessToken, generateRefreshToken } = require("../jwt");
+const bcrypt = require("bcryptjs");
 
 const getUser = async (req, res) => {
   try {
-    const users = await user.find({});
-    return res.json(users);
+    const Users = await User.find({});
+    return res.json(Users);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: "Unable to fetch users" });
+    return res.status(500).json({ error: "Unable to fetch Users" });
   }
 };
 
@@ -17,13 +16,18 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const existingUser = await user.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      return res.status(401).json({ msg: "No user found" });
+      return res.status(401).json({ msg: "No User found" });
     }
 
-    if (password !== existingUser.password) {
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordCorrect) {
       return res.status(401).json({ msg: "Incorrect email or password" });
     }
 
@@ -76,20 +80,20 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ msg: "All fields are required" });
     }
 
-    const existingUser = await user.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ msg: "User already exists" });
     }
 
-    // Hash the password
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(password, salt);
+    //hashing the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new user({
+    const newUser = new User({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword,
     });
 
     await newUser.save();
@@ -103,8 +107,7 @@ const registerUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const particularUser = await user
-      .findById(req.params.id)
+    const particularUser = await User.findById(req.params.id)
       .populate("expenses")
       .populate("revenues");
     return res.status(201).json(particularUser);
@@ -115,7 +118,7 @@ const getUserById = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  await user.findByIdAndDelete(req.params.id);
+  await User.findByIdAndDelete(req.params.id);
 
   return res.status(201).json({ msg: "Deleted successfully" });
 };
@@ -126,16 +129,23 @@ const updateUser = async (req, res) => {
     req.body;
 
   try {
-    const updatedUser = await user.findByIdAndUpdate(
+    let updateFields = {};
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      updateFields.password = hashedPassword; // Use hashed password for update
+    }
+
+    if (firstName) updateFields.firstName = firstName;
+    if (lastName) updateFields.lastName = lastName;
+    if (currentBudget) updateFields.currentBudget = currentBudget;
+    if (profile) updateFields.profile = profile;
+    if (email) updateFields.email = email;
+
+    const updatedUser = await User.findByIdAndUpdate(
       id,
-      {
-        ...(firstName && { firstName }),
-        ...(lastName && { lastName }),
-        ...(password && { password }),
-        ...(currentBudget && { currentBudget }),
-        ...(profile && { profile }),
-        ...(email && { email }),
-      },
+      { $set: updateFields },
       { new: true }
     );
 
@@ -143,9 +153,7 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ msg: "User not found" });
     }
 
-    return res
-      .status(200)
-      .json({ msg: "Updated successfully", updated: updatedUser });
+    return res.status(200).json({ msg: "Updated successfully", updatedUser });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ msg: "Server error" });
@@ -159,7 +167,7 @@ const uploadProfile = async (req, res) => {
     return res.status(400).json({ msg: "No image provided" });
   }
   try {
-    const updatedUser = await user.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       id,
       { profile: img },
       { new: true }
