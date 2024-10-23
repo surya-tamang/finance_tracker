@@ -11,13 +11,12 @@ const ManagePwd = ({ visibleBox, handleClick }) => {
   const [updated, setUpdated] = useState("");
   const handleSubmit = async (e) => {
     setErrorMsg("");
+    setUpdated("");
     e.preventDefault();
     if (!currentPwd || !updatedPwd || !confirmPwd) {
       setErrorMsg("All fields required");
     } else {
-      if (currentPwd !== userData.password) {
-        setErrorMsg("Your current password is wrong");
-      } else if (updatedPwd !== confirmPwd) {
+      if (updatedPwd !== confirmPwd) {
         setErrorMsg("password doesn't match");
       } else {
         try {
@@ -26,13 +25,20 @@ const ManagePwd = ({ visibleBox, handleClick }) => {
             headers: {
               "Content-type": "application/json",
             },
-            body: JSON.stringify({ password: updatedPwd }),
+            body: JSON.stringify({
+              currentPwd: currentPwd,
+              password: updatedPwd,
+            }),
           });
           const data = await response.json();
-          setUpdated(data.msg);
-          setTimeout(() => {
-            handleClick();
-          }, 1000);
+          if (!response.ok) {
+            setErrorMsg(data.msg);
+          } else {
+            setUpdated(data.msg);
+            setTimeout(() => {
+              handleClick();
+            }, 1000);
+          }
         } catch (err) {
           console.log(err);
         }
@@ -64,13 +70,21 @@ const ManagePwd = ({ visibleBox, handleClick }) => {
         <input
           type="password"
           value={currentPwd}
-          onChange={(e) => setCurrentPwd(e.target.value)}
+          onChange={(e) => {
+            setErrorMsg("");
+            setUpdated("");
+            setCurrentPwd(e.target.value);
+          }}
           placeholder="current password"
         />
         <input
           type="password"
           value={updatedPwd}
-          onChange={(e) => setUpdatedPwd(e.target.value)}
+          onChange={(e) => {
+            setErrorMsg("");
+            setUpdated("");
+            setUpdatedPwd(e.target.value);
+          }}
           placeholder="new password"
         />
         <input
