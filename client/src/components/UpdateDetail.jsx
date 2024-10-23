@@ -34,6 +34,9 @@ const UpdateDetail = () => {
         });
         const data = await response.json();
         setSuccessMsg(data.msg);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } catch (err) {
         console.log(err);
         setErrorMsg(err);

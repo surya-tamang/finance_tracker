@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 
 const Expense = () => {
   const userData = useSelector((state) => state.user.userInfo);
+  console.log(userData);
   const userExpenses = useSelector((state) => state.userExpenses.data);
+  console.log(userExpenses);
   const isLoading = useSelector((state) => state.user.pending);
   const isError = useSelector((state) => state.user.isError);
   const [error, setError] = useState("");
@@ -39,7 +41,7 @@ const Expense = () => {
 
     if (!purpose || !amount || !category) {
       setError("All fields required !");
-    } else if (totalExpense >= userData.currentBudget) {
+    } else if (expense.amount >= userData.currentBudget) {
       setError("Not enough balance!!");
     } else {
       setExpense({ amount: "", purpose: "", category: "" });
@@ -55,6 +57,9 @@ const Expense = () => {
         });
         const data = await response.json();
         setSuccessMsg(data.msg);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } catch (err) {
         console.log(err);
       }

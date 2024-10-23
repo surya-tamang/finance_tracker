@@ -31,7 +31,7 @@ const Signup = () => {
       if (response.ok) {
         setSuccess("Signed up successfully");
         setTimeout(() => {
-          navigate("/");
+          navigate("/login");
         }, 1500);
         return await response.json();
       } else {

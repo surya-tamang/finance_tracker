@@ -28,6 +28,9 @@ const UpdateProfilePic = ({ handleClick }) => {
 
       const data = await response.json();
       setSuccessMsg(data.msg);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (err) {
       console.log("Error occurred: ", err);
     }
