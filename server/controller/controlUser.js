@@ -125,16 +125,35 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, currentBudget, profile, email, password } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    currentBudget,
+    profile,
+    email,
+    currentPwd,
+    password,
+  } = req.body;
 
   try {
     let updateFields = {};
 
     if (password) {
+      const existingUser = await User.findById(id);
+      const isPasswordCorrect = await bcrypt.compare(
+        currentPwd,
+        existingUser.password
+      );
+      if (isPasswordCorrect) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        updateFields.password = hashedPassword;
+      } else {
+        return res.status(404).json({ msg: "Current password doesn't match" });
+      }
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-      updateFields.password = hashedPassword; // Use hashed password for update
+      updateFields.password = hashedPassword;
     }
 
     if (firstName) updateFields.firstName = firstName;

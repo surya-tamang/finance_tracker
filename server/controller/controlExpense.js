@@ -4,7 +4,6 @@ const expense = require("../model/expense");
 const addExpense = async (req, res) => {
   try {
     const { userId } = req.params;
-    console.log(userId);
     const { amount, purpose, category, date } = req.body;
 
     const newExpense = new expense({ userId, amount, purpose, category, date });
