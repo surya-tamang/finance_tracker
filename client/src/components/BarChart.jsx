@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useSelector } from "react-redux";
 
 Chartjs.register(
   CategoryScale,
@@ -19,21 +20,67 @@ Chartjs.register(
 );
 
 const BarChart = () => {
+  const userExpenses = useSelector((state) => state.userExpenses.data);
+
+  const foodExp = userExpenses.filter((expense) => expense.category === "food");
+  const stationaryExp = userExpenses.filter(
+    (expense) => expense.category === "stationary"
+  );
+  const healthExp = userExpenses.filter(
+    (expense) => expense.category === "medicine"
+  );
+  const wearsExp = userExpenses.filter(
+    (expense) => expense.category === "wears"
+  );
+  const grocceriesExp = userExpenses.filter(
+    (expense) => expense.category === "grocceries"
+  );
+  const transportaionExp = userExpenses.filter(
+    (expense) => expense.category === "transportation"
+  );
+  const travellingExp = userExpenses.filter(
+    (expense) => expense.category === "travelling"
+  );
+  const extraExp = userExpenses.filter(
+    (expense) => expense.category === "extra"
+  );
+
   const barChartData = {
     labels: [
-      "Rent",
-      "Grocceries",
-      "Utilities",
-      "Entertainment",
-      "Clothing and shoes",
-      "Transportation",
-      "Travelling",
-      "Extra",
+      "food",
+      "stationary",
+      "health",
+      "wears",
+      "grocceries",
+      "transportaion",
+      "travelling",
+      "extra",
     ],
     datasets: [
       {
         label: "expenses",
-        data: [1220, 300, 500, 800, 2000, 3000, 4000, 500],
+        data: [
+          foodExp.reduce((total, item) => (total += Number(item.amount)), 0),
+          stationaryExp.reduce(
+            (total, item) => (total += Number(item.amount)),
+            0
+          ),
+          healthExp.reduce((total, item) => (total += Number(item.amount)), 0),
+          wearsExp.reduce((total, item) => (total += Number(item.amount)), 0),
+          grocceriesExp.reduce(
+            (total, item) => (total += Number(item.amount)),
+            0
+          ),
+          transportaionExp.reduce(
+            (total, item) => (total += Number(item.amount)),
+            0
+          ),
+          travellingExp.reduce(
+            (total, item) => (total += Number(item.amount)),
+            0
+          ),
+          extraExp.reduce((total, item) => (total += Number(item.amount)), 0),
+        ],
         backgroundColor: ["#FDF8FA"],
         borderColor: ["#FDF8FA"],
         borderwidth: 1,
