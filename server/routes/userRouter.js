@@ -11,10 +11,14 @@ const {
 const {
   addExpense,
   fetchUserExpenses,
+  deleteExpenses,
+  updateExpenses,
 } = require("../controller/controlExpense");
 const {
   addRevenue,
   fetchUserRevenues,
+  updateRevenues,
+  deleteRevenues,
 } = require("../controller/controlRevenue");
 
 const {
@@ -27,8 +31,16 @@ router.route("/login").post(loginUser);
 router.route("/signup").post(registerUser);
 
 router.route("/user/:id").get(getUserById).delete(deleteUser).put(updateUser);
+
+// expenses route
 router.route("/user/expenses/:userId").post(addExpense).get(fetchUserExpenses);
+router.route("/user/expenses/:id").put(updateExpenses).delete(deleteExpenses);
+
+// revenues route
 router.route("/user/revenues/:userId").post(addRevenue).get(fetchUserRevenues);
+router.route("/user/revenues/:id").put(updateRevenues).delete(deleteRevenues);
+
+// admin route
 router.route("/admin/:id").put(updateAdmin);
 router.route("/admin/login").post(loginAdmin);
 router.route("/admin").post(addAdmin);
