@@ -34,9 +34,7 @@ const Expense = () => {
     } else if (expense.amount >= userData.currentBudget) {
       setError("Not enough balance!!");
     } else {
-      setExpense({ amount: "", purpose: "", category: "" });
       setError("");
-      setExpenses([...expenses, expense]);
       try {
         const response = await fetch(url, {
           method: "POST",

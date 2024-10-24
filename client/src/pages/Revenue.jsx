@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/revenue.css";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import RevenueTable from "../components/RevenueTable";
 
 const Revenue = () => {
   const userData = useSelector((state) => state.user.userInfo);
@@ -71,6 +72,9 @@ const Revenue = () => {
 
           <button>Add</button>
         </form>
+        <div className="table_container">
+          <RevenueTable />
+        </div>
       </section>
     </>
   );

@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-const ExpenseTable = () => {
-  const userExpenses = useSelector((state) => state.userExpenses.data);
-  const totalExpense = userExpenses.reduce(
+const RevenueTable = () => {
+  const userRevenues = useSelector((state) => state.userRevenues.data);
+  const totalrevenue = userRevenues.reduce(
     (total, item) => (total += Number(item.amount)),
     0
   );
 
   const handleDelete = async (id) => {
-    const url = `http://localhost:8520/api/user/expenses/${id}`;
+    const url = `http://localhost:8520/api/user/revenues/${id}`;
     const confirmation = confirm("You really want to delete?");
     if (confirmation) {
       try {
@@ -23,12 +23,11 @@ const ExpenseTable = () => {
 
   return (
     <table border="1">
-      <caption>Expense Statements</caption>
+      <caption>revenue Statements</caption>
       <thead>
         <tr>
           <th>SN</th>
-          <th>Purpose</th>
-          <th>Category</th>
+          <th>Source</th>
           <th>Date</th>
           <th>Amount</th>
           <th>Delete</th>
@@ -36,13 +35,12 @@ const ExpenseTable = () => {
       </thead>
 
       <tbody>
-        {userExpenses.map((item, index) => {
-          const { _id, purpose, amount, category, date } = item;
+        {userRevenues.map((item, index) => {
+          const { _id, source, amount, date } = item;
           return (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{purpose}</td>
-              <td>{category}</td>
+              <td>{source}</td>
               <td>{date.split("T")[0]}</td>
               <td>{`Rs ${amount}`}</td>
               <td className="flex gap-4 justify-center">
@@ -52,19 +50,6 @@ const ExpenseTable = () => {
                 >
                   <i className="fa-solid fa-trash"></i>
                 </button>
-                {/* <button
-                  onClick={() => handleEditButton(_id)}
-                  className="hover:bg-transparent hover:text-yellow"
-                >
-                  <i className="fa-solid fa-pen-to-square"></i>
-                </button>
-                <button
-                  className={`${
-                    _id === expId ? "block" : "hidden"
-                  } hover:bg-transparent hover:text-yellow`}
-                >
-                  save
-                </button> */}
               </td>
             </tr>
           );
@@ -73,8 +58,8 @@ const ExpenseTable = () => {
 
       <tfoot>
         <tr className="border-t bg-gray-100">
-          <td colSpan="4">Total</td>
-          <td className="py-3 px-4">{`Rs ${totalExpense}`}</td>
+          <td colSpan="3">Total</td>
+          <td className="py-3 px-4">{`Rs ${totalrevenue}`}</td>
           <td></td>
         </tr>
       </tfoot>
@@ -82,4 +67,4 @@ const ExpenseTable = () => {
   );
 };
 
-export default ExpenseTable;
+export default RevenueTable;
