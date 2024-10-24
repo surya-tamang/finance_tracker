@@ -54,7 +54,7 @@ const AdminDashboard = () => {
                   <td>{currentBudget}</td>
                   <td>{expenses}</td>
                   <td>{revenues}</td>
-                  <td className="flex gap-4">
+                  <td className="flex gap-4 justify-center">
                     <button className="hover:bg-transparent hover:text-yellow">
                       <i className="fa-solid fa-trash"></i>
                     </button>

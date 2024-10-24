@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/expense.css";
 import Header from "../components/Header";
 import { useSelector } from "react-redux";
+import ExpenseTable from "../components/ExpenseTable";
 
 const Expense = () => {
   const userData = useSelector((state) => state.user.userInfo);
-  console.log(userData);
-  const userExpenses = useSelector((state) => state.userExpenses.data);
-  console.log(userExpenses);
-  const isLoading = useSelector((state) => state.user.pending);
-  const isError = useSelector((state) => state.user.isError);
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const currentDate = new Date().toLocaleDateString();
@@ -20,7 +16,6 @@ const Expense = () => {
     purpose: "",
     date: currentDate,
   });
-  const [expenses, setExpenses] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,11 +23,6 @@ const Expense = () => {
     setError("");
     setSuccessMsg("");
   };
-
-  const totalExpense = userExpenses.reduce(
-    (total, item) => (total += Number(item.amount)),
-    0
-  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -110,40 +100,7 @@ const Expense = () => {
             <button type="submit">Add</button>
           </form>
           <div className="table_container">
-            <table border="1">
-              <caption>Expense Statements</caption>
-              <thead>
-                <tr>
-                  <th>SN</th>
-                  <th>purpose</th>
-                  <th>category</th>
-                  <th>date</th>
-                  <th>amount</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {userExpenses.map((item, index) => {
-                  const { purpose, amount, category, date } = item;
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{purpose}</td>
-                      <td>{category}</td>
-                      <td>{date.split("T")[0]}</td>
-                      <td>{`Rs ${amount}`}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-
-              <tfoot>
-                <tr>
-                  <td colSpan="4">total</td>
-                  <td>{`Rs ${totalExpense}`}</td>
-                </tr>
-              </tfoot>
-            </table>
+            <ExpenseTable />
           </div>
         </div>
       </section>

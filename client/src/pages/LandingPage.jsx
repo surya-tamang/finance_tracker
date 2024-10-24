@@ -25,9 +25,17 @@ const LandingPage = () => {
         <header className="w-full absolute top-0 px-10 flex items-center justify-between">
           <h1 className="text-red text-3xl font-bold py-4">F.T</h1>
           <Nav />
-          <NavLink to="/login" className="hover:text-yellow font-semibold">
-            Login
-          </NavLink>
+          <div className="flex gap-4 items-center">
+            <NavLink to="/login" className="hover:text-yellow font-semibold">
+              Sign in
+            </NavLink>
+            <NavLink
+              to="/signup"
+              className="hover:text-white text-yellow border-2 border-yellow hover:bg-yellow py-2 px-4 rounded-xl font-semibold"
+            >
+              Sign up
+            </NavLink>
+          </div>
         </header>
         <article className="md:ml-16 ml-8">
           <h1 className="md:text-5xl text-3xl font-semibold my-8">

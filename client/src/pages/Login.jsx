@@ -6,6 +6,7 @@ import { fetchUser } from "../redux/slices/userSlice";
 import { clearUser } from "../redux/slices/userSlice";
 
 const Login = () => {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -50,7 +51,7 @@ const Login = () => {
 
         const decoded = jwtDecode(accessToken);
         const url = `http://localhost:8520/api/user/${decoded.id}`;
-        dispatch(fetchUser(url));
+        const resultAction = await dispatch(fetchUser(url));
         if (decoded.currentBudget) {
           navigate("/overview");
         } else {

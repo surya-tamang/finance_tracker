@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import LineChart from "../components/LineChart";
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
@@ -6,6 +6,15 @@ import Header from "../components/Header";
 import { useSelector } from "react-redux";
 
 const Overview = () => {
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const hasReloaded = localStorage.getItem("hasReloaded");
+
+    if (accessToken && !hasReloaded) {
+      localStorage.setItem("hasReloaded", "true");
+      window.location.reload();
+    }
+  }, []);
   const userData = useSelector((state) => state.user.userInfo);
   const userExpenses = useSelector((state) => state.userExpenses.data);
   const userRevenues = useSelector((state) => state.userRevenues.data);
