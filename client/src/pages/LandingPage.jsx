@@ -19,7 +19,7 @@ const LandingPage = () => {
         smooth={true}
         className="fixed bg-yellow text-deep_blue cursor-pointer h-16 w-16 rounded-full bottom-10 right-10 text-xl flex justify-center items-center"
       >
-        <i class="fa-solid fa-arrow-up"></i>
+        <i className="fa-solid fa-arrow-up"></i>
       </Link>
       <section id="hero" className="h-screen flex items-center mb-16">
         <header className="w-full absolute top-0 px-10 flex items-center justify-between">

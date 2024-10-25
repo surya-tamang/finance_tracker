@@ -24,10 +24,11 @@ const Adminlogin = () => {
         const data = await response.json();
         if (!response.ok) {
           setError(data.msg);
+        } else {
+          localStorage.setItem("accessToken", data.accessToken);
+          localStorage.setItem("refreshToken", data.refreshToken);
+          navigate("/admin/dashboard");
         }
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("refreshToken", data.refreshToken);
-        navigate("/adminDashboard");
       } catch (error) {
         console.log(error);
       }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const ExpenseTable = () => {
@@ -52,19 +51,6 @@ const ExpenseTable = () => {
                 >
                   <i className="fa-solid fa-trash"></i>
                 </button>
-                {/* <button
-                  onClick={() => handleEditButton(_id)}
-                  className="hover:bg-transparent hover:text-yellow"
-                >
-                  <i className="fa-solid fa-pen-to-square"></i>
-                </button>
-                <button
-                  className={`${
-                    _id === expId ? "block" : "hidden"
-                  } hover:bg-transparent hover:text-yellow`}
-                >
-                  save
-                </button> */}
               </td>
             </tr>
           );
