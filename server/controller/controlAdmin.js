@@ -47,6 +47,7 @@ const loginAdmin = async (req, res) => {
         id: existingAdmin.id,
         name: existingAdmin.name,
         email: existingAdmin.email,
+        isAdmin: true,
       },
       "seCreTKeYOfSury4",
       {
@@ -58,6 +59,7 @@ const loginAdmin = async (req, res) => {
         id: existingAdmin.id,
         name: existingAdmin.name,
         email: existingAdmin.email,
+        isAdmin: true,
       },
       "seCreTKeYOfSury4",
       {

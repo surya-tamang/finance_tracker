@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { verify } = require("../middleware/verify");
 const {
   registerUser,
   updateUser,
@@ -30,7 +31,11 @@ const {
 router.route("/login").post(loginUser);
 router.route("/signup").post(registerUser);
 
-router.route("/user/:id").get(getUserById).delete(deleteUser).put(updateUser);
+router
+  .route("/user/:id")
+  .get(getUserById)
+  .delete(verify, deleteUser)
+  .put(updateUser);
 
 // expenses route
 router.route("/user/expenses/:userId").post(addExpense).get(fetchUserExpenses);

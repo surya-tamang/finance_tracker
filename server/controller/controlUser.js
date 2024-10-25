@@ -118,9 +118,12 @@ const getUserById = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  await User.findByIdAndDelete(req.params.id);
-
-  return res.status(201).json({ msg: "Deleted successfully" });
+  if (req.user.id === req.params.id || req.user.isAdmin) {
+    await User.findByIdAndDelete(req.params.id);
+    return res.status(201).json({ msg: "Deleted successfully" });
+  } else {
+    return res.status(403).json({ msg: "you aren't allowed" });
+  }
 };
 
 const updateUser = async (req, res) => {

@@ -1,4 +1,4 @@
-const user = require("../model/user");
+const User = require("../model/user");
 const expense = require("../model/expense");
 
 const addExpense = async (req, res) => {
@@ -9,7 +9,7 @@ const addExpense = async (req, res) => {
     const newExpense = new expense({ userId, amount, purpose, category, date });
     await newExpense.save();
 
-    const updatedUser = await user.findById(userId);
+    const updatedUser = await User.findById(userId);
     updatedUser.currentBudget -= amount;
     updatedUser.expenses.push(newExpense._id);
     await updatedUser.save();
@@ -51,7 +51,7 @@ const updateExpenses = async (req, res) => {
     );
 
     if (!updatedExp) {
-      return res.status(404).json({ msg: "user not found" });
+      return res.status(404).json({ msg: "User not found" });
     }
     return res.status(200).json({ msg: "Updated" });
   } catch (error) {
@@ -64,6 +64,7 @@ const deleteExpenses = async (req, res) => {
   const { id } = req.params;
   try {
     await expense.findByIdAndDelete(id);
+    await User.updateMany({ expenses: id }, { $pull: { expenses: id } });
     return res.status(200).json({ msg: "deleted successfully" });
   } catch (error) {
     console.log(error);
