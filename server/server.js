@@ -10,15 +10,12 @@ dotenv.config();
 
 const app = express();
 const port = 8520;
-
+const url = "mongodb://localhost:27017/finance-tracker";
 // connecting to database
 
 (async () => {
   try {
-    await connectDb(
-      "mongodb+srv://tmgsurya055:niA9hdlanUw2FzJQ@financetracker.g6oyf.mongodb.net/finance_tracker?retryWrites=true&w=majority&appName=financeTracker"
-    );
-    console.log("Connected to server");
+    await connectDb(url);
   } catch (error) {
     console.error(error);
   }
