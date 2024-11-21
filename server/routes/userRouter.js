@@ -14,12 +14,14 @@ const {
   fetchUserExpenses,
   deleteExpenses,
   updateExpenses,
+  fetchExpense,
 } = require("../controller/controlExpense");
 const {
   addRevenue,
   fetchUserRevenues,
   updateRevenues,
   deleteRevenues,
+  fetchRevenue,
 } = require("../controller/controlRevenue");
 
 const {
@@ -39,11 +41,19 @@ router
 
 // expenses route
 router.route("/user/expenses/:userId").post(addExpense).get(fetchUserExpenses);
-router.route("/user/expenses/:id").put(updateExpenses).delete(deleteExpenses);
+router
+  .route("/user/expenses/:id")
+  .put(updateExpenses)
+  .delete(deleteExpenses)
+  .get(fetchExpense);
 
 // revenues route
 router.route("/user/revenues/:userId").post(addRevenue).get(fetchUserRevenues);
-router.route("/user/revenues/:id").put(updateRevenues).delete(deleteRevenues);
+router
+  .route("/user/revenues/:id")
+  .put(updateRevenues)
+  .delete(deleteRevenues)
+  .get(fetchRevenue);
 
 // admin route
 router.route("/admin/:id").put(updateAdmin);

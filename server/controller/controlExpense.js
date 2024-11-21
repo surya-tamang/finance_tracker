@@ -33,6 +33,16 @@ const fetchUserExpenses = async (req, res) => {
     res.status(500).json({ msg: "server error" });
   }
 };
+const fetchExpense = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const expense = await expense.findById(id);
+    return res.status(200).json(expense);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Server errror");
+  }
+};
 
 const updateExpenses = async (req, res) => {
   const { id } = req.params;
@@ -63,7 +73,10 @@ const updateExpenses = async (req, res) => {
 const deleteExpenses = async (req, res) => {
   const { id } = req.params;
   try {
-    await expense.findByIdAndDelete(id);
+    const deleted = await expense.findByIdAndDelete(id);
+    const user = await User.findById(deleted.userId);
+    user.currentBudget += Number(deleted.amount);
+    await user.save();
     await User.updateMany({ expenses: id }, { $pull: { expenses: id } });
     return res.status(200).json({ msg: "deleted successfully" });
   } catch (error) {
@@ -76,4 +89,5 @@ module.exports = {
   fetchUserExpenses,
   updateExpenses,
   deleteExpenses,
+  fetchExpense,
 };

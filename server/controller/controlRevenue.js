@@ -33,7 +33,16 @@ const fetchUserRevenues = async (req, res) => {
     res.status(500).json({ msg: "server error" });
   }
 };
-
+const fetchRevenue = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const revenue = await revenue.findById(id);
+    return res.status(200).json(revenue);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json("Server errror");
+  }
+};
 const updateRevenues = async (req, res) => {
   const { id } = req.params;
   const { amount, source } = req.body;
@@ -75,4 +84,5 @@ module.exports = {
   fetchUserRevenues,
   deleteRevenues,
   updateRevenues,
+  fetchRevenue,
 };
