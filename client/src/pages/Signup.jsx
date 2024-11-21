@@ -52,11 +52,17 @@ const Signup = () => {
     e.preventDefault();
     const { firstName, lastName, email, password } = userData;
     const regexp = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const passwordReg =
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       setError("All fields required!");
     } else if (!regexp.test(email)) {
       setError("Invalid email!");
+    } else if (!passwordReg.test(password)) {
+      setError(
+        "Password must be 8-16 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
     } else if (password !== confirmPassword) {
       setError("Password doesn't match!");
     } else {
@@ -77,10 +83,11 @@ const Signup = () => {
       >
         f i n a n c e _ t r a k c e r
       </NavLink>
+
       <form
         autoComplete="true"
         onSubmit={handleSubmit}
-        className="bg-light_blue flex flex-col p-8 rounded-xl gap-4 md:w-80 mt-10 w-auto"
+        className="bg-light_blue flex flex-col p-8 rounded-xl gap-4 md:w-96 mt-10 w-full"
       >
         <h1 className="font-medium text-lg uppercase">Register now</h1>
         <span className="text-red text-xs">{error}</span>
