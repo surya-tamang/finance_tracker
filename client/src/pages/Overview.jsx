@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import LineChart from "../components/LineChart";
-import BarChart from "../components/BarChart";
-import PieChart from "../components/PieChart";
-import Header from "../components/Header";
+import BarChart from "../components/BarChart.jsx";
+import PieChart from "../components/PieChart.jsx";
+import Header from "../components/Header.jsx";
 import { useSelector } from "react-redux";
 
 const Overview = () => {

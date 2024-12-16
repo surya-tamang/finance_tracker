@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/expense.css";
-import Header from "../components/Header";
+import Header from "../components/Header.jsx";
 import { useSelector } from "react-redux";
 import ExpenseTable from "../components/ExpenseTable";
 

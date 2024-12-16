@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Overview from "./pages/Overview";
-import Revenue from "./pages/Revenue";
-import Expense from "./pages/Expense";
-import SetBudget from "./pages/SetBudget";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
+import Overview from "./pages/Overview.jsx";
+import Revenue from "./pages/Revenue.jsx";
+import Expense from "./pages/Expense.jsx";
+import SetBudget from "./pages/SetBudget.jsx";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "./redux/slices/userSlice";
 import { fetchUserExpense } from "./redux/slices/userExpenses";
 import { fetchUserRevenue } from "./redux/slices/userRevenues";
 import Footer from "./components/Footer";
-import LandingPage from "./pages/LandingPage";
-import AdminDashboard from "./pages/AdminDashboard";
-import Adminlogin from "./pages/Adminlogin";
+import LandingPage from "./pages/LandingPage.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import Adminlogin from "./pages/Adminlogin.jsx";
 
 function App() {
   const dispatch = useDispatch();

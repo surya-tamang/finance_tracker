@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Heading from "../components/Heading";
+import Heading from "../components/Heading.jsx";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);

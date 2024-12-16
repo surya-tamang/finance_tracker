@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/landingpage.css";
-import Heading from "../components/Heading";
-import Features from "../components/Features";
-import Steps from "../components/Steps";
-import FAQs from "../components/FAQs";
-import { Link } from "react-scroll";
-import Nav from "../components/Nav";
+import Heading from "../components/Heading.jsx";
+import Features from "../components/Features.jsx";
+import Steps from "../components/Steps.jsx";
+import FAQs from "../components/FAQs.jsx";
+import { Link } from "react-scroll.jsx";
+import Nav from "../components/Nav.jsx";
 
 const LandingPage = () => {
   return (
